@@ -152,25 +152,13 @@ Examples:
 5. **Device Drivers** – Communicate with hardware
 
 ---
-
-✅ **Short Definition (Interview)**
-
-> An Operating System is system software that acts as an interface between the user and computer hardware and manages system resources such as CPU, memory, files, and devices.
-
----
-
-If you want, I can also explain next for your **interview preparation**:
-
-* **Functions of Operating System**
-* **Process vs Thread**
-* **Deadlock**
-* **CPU Scheduling**
-* **Memory Management**
+## some important terms-
+1)Bootstrap program
+2)Interrupt
+3)system call (Monitor Call)
 
 
 
-## OS_from_neso
-### Process:A programme under execution  is known as Process
-### Threads:-Is a basic unit of execution so each process may have no. of process asossiated with each process can have no. of threads executing in it.mean defi:- a thread is a basic unit of CPU utilization.
-#### It comprises:1)A Thread id 2)A program counter 3) A registerset 4) A stack
+
+
 
