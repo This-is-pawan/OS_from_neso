@@ -258,6 +258,15 @@ Concept	Meaning
 Bootstrap Program	Starts the computer and loads OS
 Interrupt	Signal to CPU to handle urgent task
 System Call	Request from program to OS
+##########  Basics of Operating System (storage structure) #######
+Register,
+cache ,
+main memory ,
+electronic disk,
+magnetic disk,
+opticl disk,
+magnetic taps.
+
 
 
 
