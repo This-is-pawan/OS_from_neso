@@ -1,4 +1,3 @@
-Pawan bro, since you are preparing for **software development and MERN interviews**, understanding **Operating System (OS)** basics is very important. I will explain it simply. 😊
 
 ---
 
