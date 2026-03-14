@@ -537,7 +537,8 @@ I/O Device (Hardware)
 Interrupt to CPU
 ↓
 Operating System continues execution
-
+##############   Computer system architecture        #######
+Type of computer based on number of General purpost processors.
 
 
 
