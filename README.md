@@ -263,7 +263,9 @@ Register,
 cache ,
 main memory ,
 electronic disk,
-magnetic disk,
+magnetic disk, 
+
+
 opticl disk,
 magnetic taps.
 
