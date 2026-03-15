@@ -548,5 +548,7 @@ Type of computer based on number of General purpost processors.
 # can be structured asymmetrically(one machine in hot-standby mode, others run applications) or symmetrically(two 
 or more hosts run applications,monitors each other)
    
+#### operting system structure (mutiprogramming & multitasking)
+
 
 
