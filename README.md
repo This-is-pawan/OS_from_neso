@@ -541,7 +541,12 @@ Operating System continues execution
 Type of computer based on number of General purpost processors.
 1) single processor system
 3) mutiprocessor system (symmetrc multiprocessing,asymmetric multiprocessing).
-4) clusteral system
+4) clusteral system (
+ #like mutiprocesor systems,clustered system gather together multiple cups to accomplish computational work.
+# they are composed of two or more individual system coupled togeher  )
+# provides high availability
+# can be structured asymmetrically(one machine in hot-standby mode, others run applications) or symmetrically(two 
+or more hosts run applications,monitors each other)
    
 
 
