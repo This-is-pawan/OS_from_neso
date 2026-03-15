@@ -539,6 +539,9 @@ Interrupt to CPU
 Operating System continues execution
 ##############   Computer system architecture        #######
 Type of computer based on number of General purpost processors.
-
+1) single processor system
+2) mutiprocessor system
+3) clusteral system
+   
 
 
