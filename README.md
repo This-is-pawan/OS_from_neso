@@ -553,6 +553,15 @@ or more hosts run applications,monitors each other)
  multiprogramming increase CPU utilization by organizing jobs(code and data) so that the CPU always has one to execute.
 2)time sharing(multitasking):- cpu execute multiple jobs by swithing among them ,switches occur so frequently that the users can interact with each program while it is running
                              ################## OS services #################
-- An OS provides an environment for the execution of programs
-- It provides certain servies to programms and to users of these programs
-- 1)user interface e.g commd line interface(CU) ,graphical user interface(GUI) 
+- An OS provides an environment for the execution of programs.
+- It provides certain servies to programms and to users of these programs:-
+- 1)user interface e.g commd line interface(CU) ,graphical user interface(GUI)
+- 2)program execution
+- 3)I/O Operations
+- 4) File system manipulation
+- 5)communications (b/w process)
+- 6)Error detections
+- 7)Resource allocatoin
+- 8)Accounting
+- 9)protaction and security
+  
