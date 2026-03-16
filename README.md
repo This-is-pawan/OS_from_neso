@@ -568,7 +568,10 @@ or more hosts run applications,monitors each other)
   There are two funcdamental approaches for users to interface with the operations system.
 1) Provide a command-line interface(CLI) or command interpreter that allows users to directly enter commands that are to be performed by the operating system.
 2) Allows the user to interface with the operating system via a grahical user interfaces or GUI.
-- 
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  command interpreter    $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+- Some operating system include the command interpreter in the Kernel .
+- Others,such as window XP and UNIX ,treat the command interpreter as a special program.
+- On system with multiple command interpreters to choose from,the interpreters are known as shells e.g Bournce shell,C shell boune-again shell (Bash),korn shell ,etc.
 
 
 
