@@ -549,7 +549,9 @@ Type of computer based on number of General purpost processors.
 or more hosts run applications,monitors each other)
    
 #### operting system structure (mutiprogramming & multitasking)
- multitasking:- A single user cannot ,in general ,keep either the CPU or the I/O devices busy at all times
+ 1)multitasking:- A single user cannot ,in general ,keep either the CPU or the I/O devices busy at all times
  multiprogramming increase CPU utilization by organizing jobs(code and data) so that the CPU always has one to execute.
+2)time sharing(multitasking):- cpu execute multiple jobs by swithing among them ,switches occur so frequently that the users can interact with each program while it is running
+
 
 
