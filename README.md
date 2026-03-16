@@ -552,6 +552,7 @@ or more hosts run applications,monitors each other)
  1)multitasking:- A single user cannot ,in general ,keep either the CPU or the I/O devices busy at all times
  multiprogramming increase CPU utilization by organizing jobs(code and data) so that the CPU always has one to execute.
 2)time sharing(multitasking):- cpu execute multiple jobs by swithing among them ,switches occur so frequently that the users can interact with each program while it is running
-
-
-
+                             ################## OS services #################
+- An OS provides an environment for the execution of programs
+- It provides certain servies to programms and to users of these programs
+- 1)user interface e.g commd line interface(CU) ,graphical user interface(GUI) 
