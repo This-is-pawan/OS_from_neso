@@ -555,13 +555,21 @@ or more hosts run applications,monitors each other)
                              ################## OS services #################
 - An OS provides an environment for the execution of programs.
 - It provides certain servies to programms and to users of these programs:-
-- 1)user interface e.g commd line interface(CU) ,graphical user interface(GUI)
-- 2)program execution
+- 1)User interface e.g commd line interface(CU) ,graphical user interface(GUI)
+- 2)Program execution
 - 3)I/O Operations
 - 4) File system manipulation
-- 5)communications (b/w process)
+- 5)Communications (b/w process)
 - 6)Error detections
 - 7)Resource allocatoin
 - 8)Accounting
-- 9)protaction and security
+- 9)Protaction and security
+                 ############################# User operating system inerface  ######################
+  There are two funcdamental approaches for users to interface with the operations system.
+1) Provide a command-line interface(CLI) or command interpreter that allows users to directly enter commands that are to be performed by the operating system.
+2) Allows the user to interface with the operating system via a grahical user interfaces or GUI.
+- 
+
+
+
   
