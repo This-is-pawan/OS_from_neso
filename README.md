@@ -900,7 +900,11 @@ Design goals 1st problem-defining goals and specification -choice of hardware,-t
 requirements: user goals,system goals.
 
 ############ structure of os ###########
-simple structure:- applcation programs -> resident system programs ->device drivers ->ROM BIOS device drivers
-monolithic structure:-(the users) shells and commands compilers and interpreters system libaraires, kernel[ singal,termal handling character I/O system terminal drivers] | sytem swapping block I/O system disk and tape drivers | CPU scheduling page replacement demand paging virtual memory _____________> kernel interface to the hardware ____> terminal controllers terminals | device controllers  disk and tapes | (hardware) memory controllers physical memory  .
-
-  
+-simple structure:- applcation programs -> resident system programs ->device drivers ->ROM BIOS device drivers
+-monolithic structure:-(the users) shells and commands compilers and interpreters system libaraires, kernel[ singal,termal handling character I/O system terminal drivers] | sytem swapping block I/O system disk and tape drivers | CPU scheduling page replacement demand paging virtual memory _____________> kernel interface to the hardware ____> terminal controllers terminals | device controllers  disk and tapes | (hardware) memory controllers physical memory  .
+-layered structure:-
+-microkernels:-
+-modules:-
+########################## virtual machine   #######################
+  The fundamental idea behind a virtual machine is to abstract the hardware of a single computer (the CPU,memory disk drives,network interface cards,and so forth) into serveral different execution enviroments. thereby creating the illusion that each separate execution environment is running its own private computer.
+  ######################## operating system generation and system boot    ######################
