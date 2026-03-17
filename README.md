@@ -703,6 +703,190 @@ A system call is a mechanism that allows a user program to request services from
 > A system call is an interface between a user program and the operating system to request services like file access, memory allocation, and process creation.
 
 ---
+types of system calls
+system calls can be grouped rougly into five major categaries.
+1)process control
+2)file manipulation
+3)device management
+4)information maintenance
+5)communications
+
+###############
+1. Process Control
+
+Meaning:
+Process control system calls are used to create, execute, and terminate processes.
+
+A process means a program that is currently running.
+
+Why used:
+To control the life cycle of a program.
+
+Examples of actions
+
+Create a process
+
+End a process
+
+Load a program into memory
+
+Wait for a process
+
+Examples of system calls
+
+fork() → creates a new process
+
+exec() → runs a new program
+
+exit() → terminates a process
+
+wait() → waits for a process to finish
+
+Example situation:
+When you open Chrome, the OS creates a new process.
+
+2. File Manipulation
+
+Meaning:
+These system calls are used to create, read, write, and delete files.
+
+Programs use these calls whenever they need to store or access data.
+
+Examples of actions
+
+Create file
+
+Open file
+
+Read file
+
+Write file
+
+Delete file
+
+Examples of system calls
+
+open()
+
+read()
+
+write()
+
+close()
+
+delete()
+
+Example situation:
+When you open data.txt, the program uses open() system call.
+
+3. Device Management
+
+Meaning:
+These system calls are used to control hardware devices.
+
+Devices include:
+
+keyboard
+
+printer
+
+disk
+
+mouse
+
+The OS manages devices using device drivers.
+
+Examples of actions
+
+Request a device
+
+Release a device
+
+Read from device
+
+Write to device
+
+Examples
+
+read() from keyboard
+
+write() to printer
+
+Example situation:
+When you print a document, the OS sends data to the printer device.
+
+4. Information Maintenance
+
+Meaning:
+These system calls are used to get or set system information.
+
+Programs may need information about:
+
+system time
+
+date
+
+process ID
+
+system data
+
+Examples of system calls
+
+getpid() → get process ID
+
+time() → get system time
+
+alarm() → set timer
+
+Example situation:
+When a program displays the current time, it uses an information system call.
+
+5. Communication
+
+Meaning:
+These system calls allow processes to communicate with each other.
+
+This is called Inter-Process Communication (IPC).
+
+Processes exchange:
+
+data
+
+messages
+
+Examples of communication methods
+
+message passing
+
+shared memory
+
+pipes
+
+sockets
+
+Examples of system calls
+
+pipe()
+
+send()
+
+receive()
+
+socket()
+
+Example situation:
+When a browser communicates with a web server, it uses communication system calls.
+
+Simple Exam Table
+Type	Purpose
+Process Control	Create and manage processes
+File Manipulation	Read, write, create files
+Device Management	Control hardware devices
+Information Maintenance	Get system information
+Communication	Exchange data between processes
+
+
+
 
 
 
