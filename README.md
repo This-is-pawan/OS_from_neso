@@ -886,9 +886,21 @@ Information Maintenance	Get system information
 Communication	Exchange data between processes
 
 
+################### system programs #################
+An important aspect of a modern system is the collection of system programs.
+categories of system programs: -
+-file mangement ,
+-status infomation,
+-file modificatin,
+-programming-language support,
+-program loading and execution,
+-communications.
+################### operating system design & impementation ###################
+Design goals 1st problem-defining goals and specification -choice of hardware,-type of system beyond this highest design level,the requirements may be much harder to specify.
+requirements: user goals,system goals.
 
-
-
-
+############ structure of os ###########
+simple structure:- applcation programs -> resident system programs ->device drivers ->ROM BIOS device drivers
+monolithic structure:-(the users) shells and commands compilers and interpreters system libaraires, kernel[ singal,termal handling character I/O system terminal drivers] | sytem swapping block I/O system disk and tape drivers | CPU scheduling page replacement demand paging virtual memory _____________> kernel interface to the hardware ____> terminal controllers terminals | device controllers  disk and tapes | (hardware) memory controllers physical memory  .
 
   
