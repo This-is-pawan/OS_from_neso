@@ -572,6 +572,138 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  command interpreter    $$$$$$$$$$$$$$$$$$$
 - Some operating system include the command interpreter in the Kernel .
 - Others,such as window XP and UNIX ,treat the command interpreter as a special program.
 - On system with multiple command interpreters to choose from,the interpreters are known as shells e.g Bournce shell,C shell boune-again shell (Bash),korn shell ,etc.
+  Pawan bro, I will explain **System Calls** in a very simple way with **What, Why, Where, and How**. This is an important concept in Operating System.
+
+---
+
+## 1. What is a System Call?
+
+A **system call** is a method that allows a **user program** to request a service from the **Operating System (OS)**.
+
+In simple words:
+👉 A **system call is a bridge between a user program and the OS kernel**.
+
+Example:
+When a program wants to **read a file, write a file, create a process, or use hardware**, it uses a system call.
+
+Example system calls:
+
+* `read()`
+* `write()`
+* `open()`
+* `close()`
+* `fork()`
+
+These allow the program to talk to the **kernel of the OS**.
+
+---
+
+## 2. Why System Calls are Needed?
+
+User programs **cannot access hardware directly** for security and safety.
+
+So the OS controls everything.
+
+Reasons:
+
+* Security 🔒
+* Hardware protection
+* Controlled access to CPU, memory, files, and devices
+
+Example:
+
+If a program wants to **read a file from disk**:
+
+Program → System Call → OS Kernel → Disk → Data returned
+
+Without system calls, programs could **damage the system**.
+
+---
+
+## 3. Where System Calls are Used?
+
+System calls are used whenever a program needs **OS services**.
+
+Common areas:
+
+1. **File Management**
+
+   * open file
+   * read file
+   * write file
+
+2. **Process Management**
+
+   * create process
+   * terminate process
+
+3. **Device Management**
+
+   * use printer
+   * use keyboard
+   * use disk
+
+4. **Memory Management**
+
+   * allocate memory
+   * free memory
+
+---
+
+## 4. How System Calls Work?
+
+Step-by-step working:
+
+1. A **user program** runs in **user mode**.
+2. The program needs a service (for example open a file).
+3. The program calls a **system call function**.
+4. CPU switches from **user mode → kernel mode**.
+5. The **kernel performs the task**.
+6. Control returns to the **user program**.
+
+Flow:
+
+```
+User Program
+     ↓
+System Call
+     ↓
+Operating System Kernel
+     ↓
+Hardware (Disk, Memory, CPU)
+     ↓
+Result returned to program
+```
+
+---
+
+## 5. Real Example
+
+Suppose you run this program:
+
+```c
+FILE *f = fopen("data.txt","r");
+```
+
+Behind the scenes:
+
+Program → `open()` system call → OS → Disk → file opened.
+
+---
+
+## 6. Simple Definition (Exam Style)
+
+**System call:**
+A system call is a mechanism that allows a user program to request services from the operating system kernel.
+
+---
+
+✅ **Short Example Sentence**
+
+> A system call is an interface between a user program and the operating system to request services like file access, memory allocation, and process creation.
+
+---
+
 
 
 
