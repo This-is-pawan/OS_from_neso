@@ -908,3 +908,20 @@ requirements: user goals,system goals.
 ########################## virtual machine   #######################
   The fundamental idea behind a virtual machine is to abstract the hardware of a single computer (the CPU,memory disk drives,network interface cards,and so forth) into serveral different execution enviroments. thereby creating the illusion that each separate execution environment is running its own private computer.
   ######################## operating system generation and system boot    ######################
+-design ,code ,and implement on operating system specifically for one machine of one site 
+- os are designed to run an any of a class of machine at a variety of sites with a variety of perpheral configurations
+- The system must then bre configured or generated for each specific computer site,a process sometimes know as system genration (SYSGEN) is used for this
+- this following kinds of informations must be determined by the SYSGEN program:
+- when CPU is to be used?
+- how much memory is available?
+- what device are avaiable?
+- what os  options are desired?
+##################### system boot
+- the procedure of starting a computer by loading the kernel is known as booting the system.
+- on most computer systems,a small piece of code known as the bootstrap program or bootstrap loader locates the kernal
+- This program is in the form of read-only memory(ROM) ,because the RAM is in an unknown state at system startup.ROM is convnient because it needs no initialization and cannot be infected by a computer virus.
+- firmware
+- when the full bootstrap program has been loaded,it can traverse the file system to find the os kernel .load it into memory ,and start its execution. it is only at this point that the system is said to be. [RUNNING]
+
+
+
