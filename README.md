@@ -1001,6 +1001,127 @@ A parent may terminate the execution of one of its children for a variety of rea
   processess can then exchange infomation by reading and writing data to that shared region.
   *In the message passing model,communication takes place by means of messages exchanged b/w the cooperating processes.  
   
+################### shared memory systems  #####################
+* interprocess communications shared memory requires communicating process to establish a region of shared memory.
+* Typically,a shared-memory region resides in the address space of the process creating the shared-memory segament.
+* Other process that wish to communicate using this shared-memory segament must attach it to their address space.
+* Normally ,the aperating system tries to prevent one process from accessing another process's memory.
+* shared memory requires that two or more processes agree to remove this restricion.
+***** producer consumer problem ******
+  A producer process infomation that is consumed by a consumer process.
+  for e.g a complier may produce assembly code,which is consumed by an assembler.The assembler,in turn ,may produce object modules, which are consumed by the loader.
+  * One solution to the produce-consumer problem uses shared memory.
+  * To allow producer and consumer processess to run concurrently ,we must have avalible a buffer of items that can be filled by the producer and emptied by the consumer.
+  * This buffer will reside in a region of memory that is shared by the producer  and consumer processess.
+  * This producer and consumer must be synchronized, so that the consumer does not try to consume an item  that has not yet been produced.
+  **** Two kinds of buffers ******
+- unbounded buffer(places no practice limit on the size of the buffe.The consumer my have to wait for new items,but the producer can always produce new items)
+- bounded buffer( Assumes a fixed buffer size.in this case,the consumer must wait if the buffer is empty,and the producer must wait if the buffer is full.)
+  
+  ########### Message-passing system (part-1)  ################
+  
+  -Message passing provides a mechanism to allow processes to communicate and  to synchronize their actions without sharing the same address space and is particularly useful is a distributed environment ,where the communicating processess may resides on different computers connected by a network.
+  *A message-passing facility provides at least two operations: -send(message)
+  - receive (message)
+    message sent by a process can be of either fixed or variable size .
+  *fixed size:They system-level implementation is straightforward.but makes the task of programming more diffcult.
+    
+ *variable size:Requires a more complex system-level implementation but the programming task become simpler.
+ *if processess P and Q want to communicate,they must send messages to and receive messages from each other.
+ A communication link must exist between them.
+ This link can be implemented in a variety of way.There are several methods for logically implementing a link and the send()/receive() operations,like:
+ -direct or indirect communication
+ - synchronous or asynchronous communication
+ - automatic or explicit buffering
+   there are serveral issues related with features like:-
+   *Naming
+   *synchronization
+   *buffering
+   **Naming**:-Processess that want to communicate must have a way to refer to each other.They can use either direct or indirect communication.
+   *under direct communication:-Each process that wants to communicate must explicity name the recipient or sender of the communication.
+   -send(p,message)-send a message to process P.
+   -receive(Q,message)-send a message from process Q.
+   A communication link in this scheme has the following properties:
+   -A link is established automatically b/w every pair of processess that want to communicate.The processess need to know only each other's identity to communicate.
+   - A link is associated with  exactly two processess
+   - b/w each pair of processor ,there exists one link.
+     This scheme exhibits symmetry in addressing: that is both the sender process and the receiver process must name the other to communicate.
+*another variant of direct communication:-here only the sender names the recipient,the recipient is not required to name the sender.
+-send(p,message)-send a message to process P.
+-receive(id,message)-Receive a message from any process the variable id is set to the name of the proecess with which communication has taken place.
+*The disadvantage in both of these schemes (symmetric and asymmetric) is the limited modularity of the resulting process definitions.changing the identifier of a process may necessitate examing all other process definitions.
+** With indirect communication:
+The messages are sent to and received from mailboxes or parts.
+-A mailbox can be viewed abstract as an object into which messages can be placed by processess and from which messages can be removed
+- Each mailbox has a unique identification.
+- Two processess can communicate only if the processess have a shared  mailbox
+  *send(A,message)-send a message to mailbox A.
+  *receive(A,message)-Receive a message from mailbox A.
+  ______A communication link in this scheme has the following properties:
+  *A link is established b/w a pair of processor only if both member of the pair have a shared mailbox.
+  *A link may be association with more than two processes.
+  * B/w each pair of communicating processess,there may be a number of different links,with each link corresponding to one mailbox.
+    **synchranization**
+    communication b/w processes takes place through calls to send() and receive() primitives.there are different design options for implemening each primitive.
+    message passing may be either blocking or nonblocking -also known as synchroues and asynchrous.
+-Blocking send:-the sending process is blocked until the message is received by the receiving process or by the mainbox.
+-Nonblocking send:-The sending proocess sends the message and resumes operation.
+Blocking receive:-The receiver blocks until a message is available.
+-Nonblocking receive:-The receiver retrieves either a valid message or a null.
+*** Buffering ***
+    whether communication is direct or indirect  ,messages exhanged by communicating processes resides in a temporary queue. basically ,such queues can be implemented in three ways.
+    
+    -zero capacity:- the queue has a miximum length of zero,thus,the link cannot have any messages waiting in it.In this case,the sender must block until the recipient recevies the message.
+    
+    -bounded capacity:-The queue has finite length n;thus ,at most n messages can resides in it .if the queue is not full when a new message is sent ,the message is placed in the queue and the sender can continue execution without waiting .the links capacity is finite ,however,if the link  is full ,the sender must block until space is avaiable in the queue.
+    
+- unbounded capacity:The queue length is potentially infinite:thus,any number of messages can wait in it.the sender never blocks.
+  
+  ####################### Sockets (inter processing communication) ############
+  * Used for communications in client-server systems
+-A socket is defined as an endpoint for communication.
+- A pair of processes communicating over a network employ a pair of sockets-one for each process.
+- A socket is identified by an IP address concatenated with a part number.
+- The server waits for incoming client requests by listing to a specified part .once a request is received ,the server accepts a connection from the client socket to complete the connection.
+- servers implementing specific services( such as telnet ,ftp and http listen to well-known parts)
+( a telnet server listens to part 23,an ftp server listens to part 21,and a web,or http,server listens to port 80)
+-All ports below 1024 are considered well known;we can use them to implement standard services.
+  ########### Remote Procedure (RCP) ########
+  *remote procedure call(RPC) is a protocal that one program can use to request a service from a program located in another computer on a network without having to understand the network's details.
+  -It is similar in many respects to the IPC mechanism.
+  -However ,because we are dealing with an enviroment in which the processess are executing an separte systems,we must use a message based communication scheme to provide remote service.
+  - in contrast to the IPC facility, the messages exchanged in RPC communication are well structured and are thus no longer just packet of data.
+  - Each message is addressed to an RPC daemon listening to a part on the remote system,and each contains an identifier of the functions to execute and the parameters to pass to that function.
+  - 
+  
+  
+  
+    
+    
+
+    
+ 
+
+
+
+
+    
+  
+
+
+
+
+     
+     
+     
+   
+   
+   
+   
+ 
+   
+
+  
 
 
 
