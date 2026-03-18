@@ -969,6 +969,21 @@ when an interrupt occurs,the system needs to save the current context of the pro
     -The child process is a duplicate of the parent (it has the same programe and data as the parent).
     -The child process has a new program loaded into it.
      
+####################### OS on process (process termination) ####################
+-A process terminaties when it finishes executing its final statement and asks the OS to delete it by using the exist() system call.
+-At that point,the process may return a status value (typically an interger ) to its parent process (via the wait()) system call).
+-All the resoures of the process -including physical and virtual memory,open files,and I/O buffers -are deallocated by the operating system.
+----Termination can accur in other circumstance as well:-
+-A process can cause the termination of another process via an appropriate system call.
+-usually ,such a system call can be invoked only by the parent of the process that is to be terminated.
+-otherwise,users could arbitrarily kill each other's jobs.
+A parent may terminate the execution of one of its children for a variety of reasons,such as these .
+- The child has exceeded its usage of same of the resources that it has been allocated.(To determine whethe this has occured,the parent must have a mechanism to inspect the state of its children).
+- The task assigned to the child is no longer required.
+- The parent is existing and the os does not allow a child to continue if its parent terminates.
+######### interprocess communication ##############
+
+
 
 
 
