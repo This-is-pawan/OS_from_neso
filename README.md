@@ -953,6 +953,22 @@ read-queue:-The process that are residing in main memory and are ready and waiti
 -such OS happen frequently an general-purpose system.
 when an interrupt occurs,the system needs to save the current context of the process currently running on the cpu so that it can restore that context when its processing is done,essentially suspending the process and then resuming it.
 - the context is represented in the PCB(process control block) of the process.
+- switching the cpu to another process requires performing a state save of the current process and a state restore of a different process.
+- This task is known as a context switch.
+- context-switch time is pure overhead,becuase the system does no useful work while switching.
+- Its speed from machine to machine,depending on the memory speed,the number of registers that must be copied,and the existence of special instructions (such as a single instruction to load or store all register).
+- typical speed are a few millseconds.
+############### OS (process creation)   ####################
+- A process may create serveral new process ,via a create-process system call,during the course of execution.
+- The creating process is called a parent process.and the new process are called the children of that process.
+- Each of these new process may in turn create process forming a tree of processes.
+----when a process creates a new process two posibilities exist in term of execution----
+  - The parent continues to executes concurrently with its children .
+  - The parent waits until same or all of its children have terminated.
+    ---- there are also two possibities in terms of the address space of the new process:
+    -The child process is a duplicate of the parent (it has the same programe and data as the parent).
+    -The child process has a new program loaded into it.
+     
 
 
 
