@@ -982,6 +982,26 @@ A parent may terminate the execution of one of its children for a variety of rea
 - The task assigned to the child is no longer required.
 - The parent is existing and the os does not allow a child to continue if its parent terminates.
 ######### interprocess communication ##############
+-Processes executing concurrently in the os may be either independent proccess or cooperating process. {
+-Independent processes:They cannot affect or be a affected by the other processes executing in the system.
+-cooperaing processes:They can affect or be affected by the other process executing in the sytem.}
+-Any process that shares data with other processess is a cooperating process.
+
+---There are serveral reason for providing an environement that allows process cooerations: 
+-information sharing,
+-computation speedup.
+- modularity
+- convenience
+  
+* cooperating process require an interprocess communication (IPC) mechanism that will allow them to exchange data adn information.
+* There are two fundametal models of interprocess communication:
+  1)shared memory
+  2) message passing
+  *In the shared-meory model,a region of memory that is shared by cooperating processes is established.
+  processess can then exchange infomation by reading and writing data to that shared region.
+  *In the message passing model,communication takes place by means of messages exchanged b/w the cooperating processes.  
+  
+
 
 
 
