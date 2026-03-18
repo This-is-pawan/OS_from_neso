@@ -935,6 +935,25 @@ Threads:- A thread is the unit of execution within a process .A process can have
 - Waiting->The process is waiting for some event to accur (such as an I/O completion or reception of a singal).
 - Ready->The process is waiting to be assigned to a proocessor.
 - Terminated->The process has finished execution. 
+ ##################  Process control Block          ###################
+Each process is represented in the OS  by a process control Block (PCB) also called a task control block.
+Process ID->process state->process number->process number->program counter->register->memory limits->list of open files 
+################  process scheduling     ###################
+-The objective of multiprogramming is to have some process running at all times,to maximize CPU utilization.
+-The objective of time sharing is to swith the cpu among process so frequently that users can interact with each program while it is running.
+-To meet these objectives the process scheduler selects an available process(possibly from a set of several available processs) for program execution an the CPU .
+-for a single-processor system,there will never be more than one running process.
+-if there are more process ,the rest will have to wait until the CPU is free and can be resscheduled.
+############# Scheduling Queues  #############
+job-queue:- An process enter the system they are put into a job queue,which consists of all process in the system.
+read-queue:-The process that are residing in main memory and are ready and waiting to execute are kept on a list called the ready queue.
+
+########## Context Switch  ##########
+-interrupts cause the OS to change a cpu from its current task and to run a kernal routine.
+-such OS happen frequently an general-purpose system.
+when an interrupt occurs,the system needs to save the current context of the process currently running on the cpu so that it can restore that context when its processing is done,essentially suspending the process and then resuming it.
+- the context is represented in the PCB(process control block) of the process.
+
 
 
 
