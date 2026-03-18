@@ -923,5 +923,6 @@ requirements: user goals,system goals.
 - firmware
 - when the full bootstrap program has been loaded,it can traverse the file system to find the os kernel .load it into memory ,and start its execution. it is only at this point that the system is said to be. [RUNNING]
 
-
-
+########################  process management    #######################
+                           (process and threads)
+process:- A process can be thought of as a program in execution.
