@@ -925,4 +925,17 @@ requirements: user goals,system goals.
 
 ########################  process management    #######################
                            (process and threads)
-process:- A process can be thought of as a program in execution.
+Process:- A process can be thought of as a program in execution.
+Threads:- A thread is the unit of execution within a process .A process can have within a process.A process can have anywhere from just one thread to many threads.
+########################## Process State #####################
+- As a process execute ,it changes state.
+- The state of a process is defined in part by the current activity of that process.
+- Each process may be in one of the following states: New -> The process is being created.
+- Running->Instructions are being executed.
+- Waiting->The process is waiting for some event to accur (such as an I/O completion or reception of a singal).
+- Ready->The process is waiting to be assigned to a proocessor.
+- Terminated->The process has finished execution. 
+
+
+
+
