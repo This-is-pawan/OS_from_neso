@@ -1102,6 +1102,25 @@ Blocking receive:-The receiver blocks until a message is available.
 - A similar stub on the server side receives this message and invokes the procedure on the server.
 - if necessary ,return values are passed back to the client using the same techinque.
 **issues in RPC and how they are resloved**
+
+  ###################### Threads  #######################
+  A thread is a basic unit of CPU utilizaiton.
+  it comprises-> A thread Id ->A program counter-> A register set -> A stack
+  -it shares with other threads belonging to the same process its code section ,data section, and other OS resources ,such as open files and signals.
+  -A tradition/heavyweight process has a single thread of control.If a process has multiple threads of control,it can perform more then one task at a time.
+  **** Benefits ****
+  The benefits of mutithreads programming can be broken down into four major categories:
+  -Responsiveness:-muttithreads an interactive application may allow a program to continue running even if part of it is blocked or is performing a lengthy operations,therby increasing respionesiveness to the user.
+  -resourse sharing:-by default ,threads share the memory and the resources of the process to which they belong.the benefit of sharing code and data is that it allows an applications to have serveral different threads of activity within the same address space.
+-Economy:-Allocaing memory and resouces for process creation is costly.Because threads share resource of the process to which they belong,it is more economical to create and context-switch threads.
+  -Utilization of multiprocessor architectures:-The benefits of multihreads can be greatly inceased in a multiprocessor architecture,where threads may be running in parallel on different processors.A single-threads process can only run on cpu,no matter how many are avaiable.multihreading on a multi-cpu machine increases concurrency.
+  ############ Mutlihreading models and Hypethrading ##########
+  Types of theads:-
+  -1)User threads:-Supported above the kernel and are mananged without kernel support.
+  -2)kernel threads:-Supported and managed directly by the OS
+  
+  
+  
   
   
   
