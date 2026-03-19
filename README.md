@@ -1193,7 +1193,17 @@ then the separate process should duplicate all threads
 
    ############### CPU Scheduling  #####################
    CPU scheduling  is the basis of multiprogrammed OS.By switching the CPU among process,the OS can make the computer more productive.
-   
+   Topics to be covered:
+   -To introduce CPU scheduling,which  is the basis for multiprogrammed OS .
+   - To describe variouse  CPU-scheduling alogrithms.
+   - In a single-processor system,only one process can run at a time.
+   - Any others must wait until the CPU is free and can be rescheduled.
+   - The objective of multiprogramming is to have some process running at all times ,to maximize CPU utilizations.
+   - A process is executed until it must wait ,typically for the completion of same I/O request.
+   - In a simple computer system,the CPU then just site idle.All this waiting time is wasted;no useful work is accomplished 
+   -with multiprogamming ,we try to use this time producively .
+-serveral processess are kept in memory at one time.
+when one process has to wait,the os takes the CPU away from that process and gives the CPU to another process  and this pattern continue.
  
  
  
