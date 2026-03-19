@@ -1093,6 +1093,17 @@ Blocking receive:-The receiver blocks until a message is available.
   - in contrast to the IPC facility, the messages exchanged in RPC communication are well structured and are thus no longer just packet of data.
   - Each message is addressed to an RPC daemon listening to a part on the remote system,and each contains an identifier of the functions to execute and the parameters to pass to that function.
   - 
+*The semanties of RPCs allow a client to invoke a procedure on a remote host as it would invoke a procedure locally
+-The RPC system hides the details that allow communication to take place by providing a stub on the client side.
+- Typically ,a separate stub exists for each separate remote procedure
+- When the client invokes a remote procedure ,the RPC system calls the appropriate stub,passing it the parameters provides to the remote procedure .This stub locates the port on the server and  marshals the parameters.
+- parameters marshaling involves packagin the parameters into a form that can be transmitted over a network.
+- The stub then transmits a message to the server using message passing.
+- A similar stub on the server side receives this message and invokes the procedure on the server.
+- if necessary ,return values are passed back to the client using the same techinque.
+**issues in RPC and how they are resloved**
+  
+  
   
   
   
