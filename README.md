@@ -1118,7 +1118,97 @@ Blocking receive:-The receiver blocks until a message is available.
   Types of theads:-
   -1)User threads:-Supported above the kernel and are mananged without kernel support.
   -2)kernel threads:-Supported and managed directly by the OS
+  * ultimately,there must exist a relationship between user threads and kernel threads
+    There are three common ways of establishing this relationship.
+  1) many to one model
+  2) one to one model
+  3) many to many model
+     * many to one model:-maps many user-level theads to one kernel thread.
+ -Thread management is done by the thread libaray in user space,so it is efficient.
+
+*limitations:-The entire process will block if a thread makes a blocking system call.
+
+- because only one thread can access the kernel at a time,multiple threads are unable to run in parallel on mutliprocessors.
+*one to one mode:-maps each user thread to a kernel thread.
+-provides more concurrency than the many to one model by allowing another thread to run when a thread makes a blocking system call:
+-Also allows multiple threads to run in parallel an mutiprocess.
+
+*limitations:-Creating a user thread requires creating the corresponding kernel thread.
+-Because the overhead of creating kernel threads can burden the performance of an application,most implementations of this model restrict the number of threads supported by the system.
+* many to many model:-Multiplexes many user-level threads to a smaller or equal no. of kernel threads.
+  -The no. of kernel threds may be specific to either a particular application or a particular machine.
   
+  *limitations:-Developers can create as many user threads as neccssary  ,and the corresponding kernel threads can run in parallel on  a multiprocessor.
+  -also when a threads performs a blocking system call,the kernel can schedule another thread for execution.
+************ Hyperthreading ****************
+                   or
+  -simultaneous multithreading (SMT)
+  Hypertheaded systems allow their processor cores resources to become mutiple logical processors for performance.
+  It enables the processor to execute two threads or sets of instructions ,at the same time,since hyper-threading allows two streams to be executed in parallel ,it is almost like having two separate a processros working together.
+  to find cores
+  
+  c:\Users   wmic
+  
+1)  wmic:root\cli> CPU Get NumberOfCores
+  result 2 or 4 (depending)
+  
+2)  wmic:root\cli> CPU Get NumberOfCores.NumberOfLogicalProcessors
+  
+####### fork() and exec() system calls #########
+fork():-The fork() system call is used to create a speate,duplicate process.
+exec():-when an exec() system call is invoked,the program specified in the parameter to exec() will replace the entire process including all threads 
+##### threads issue :-
+the semantics of the fork() and exec() system calls change in a multithreaded program.
+
+Issue:If one thread in a program calls fork(),
+does the new process duplicate all threads, or is the new process single-threads?
+Solution:-Some UNIX system have chosen to have two version of fork().one that duplicates all threads and another that duplicate only the thread that invoked the fork() system call.
+Question is but which version of fork() to use and when?
+Ans_ Also, if a thread invokes the exec() system call,the program specified in the parameter to exec() will replace the entire process-including all threads.
+which of the versions of fork() to use depends on the application.
+*if exec() is called immediately after forking.
+then duplicating all thread is unneccessary, as the program specified in the parameters to exec() will replace the process.
+In this instance ,duplicating only the calling thread is appropriate.
+*if the separate process does not call exec() after forking 
+then the separate process should duplicate all threads
+
+########## Threadding issues part-2 ########
+*If multiple threads are concurrently searching through a database adn one thread returns the result,the remaining theards might be cancled.
+*when a user process a button on a web browser that stops a web page from loading any further .all threads loading the page are canceled.
+ A thread that is to be cancelled is often referreed to as the target thread.
+ **** Cancellation of a target thread may occur in two different scenarios:
+ 1)Asynchronous cancellation:One thread immediately terminates the target thread .
+ 2)Deferred cancellation:-The target thread periodically checks whether it should terminate,allowing it an opportunity to terminate itself in an orderly fashion.
+###### Where the difficulty with cancellation lies:
+ In situations where:
+ - Resources have been allocated to a canceled thread.
+ - a thread is canceled while in the midset of updating data it is sharing with other threads .
+ - Often the os will reclaim system resource from a canceled thread but will not reclaim all resources.
+ - therefore ,canceling a thread asynchronously may not free a neccessary system-wide resource.
+   ---with deferred cancellation----:
+   One thread indicates that a target thread is to be canceled .But cancellation occurs only after the target thread has checked a flag to determine if it shoud be canceled or not .
+   this allows a thread to check wheather it should be canceled at a point when it can be canceled safely.
+
+
+
+   ############### CPU Scheduling  #####################
+   CPU scheduling  is the basis of multiprogrammed OS.By switching the CPU among process,the OS can make the computer more productive.
+   
+ 
+ 
+ 
+
+
+
+
+
+
+     
+      
+     
+       
+    
+    
   
   
   
