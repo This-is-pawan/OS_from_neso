@@ -1212,11 +1212,20 @@ process execution consists of a cycle of CPU execution and I/O wait,process alte
 * I/O burst which is follwed by another
 * CPU burst ,then another
 * I/O burst,and so on.. 
+-cpu burst is when the process is being executed in the cpu.
+-I/O burst is when the cpu is waiting for I/O for further execution
+Eventually,the find cpu burst and with a system request to terminate execution.
+ * executions:-
+load store|
+add store|  cpu burst
+read from file|
 
-
-
-
-
+wait for I/O ->I/O burst
+store increment |                      alternating sequence of cpu                                               &i/o burste
+index | ->CPU burst
+write to file |
+wait for I/O I/O burst      
+so on ............
 
      
       
