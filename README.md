@@ -1204,9 +1204,14 @@ then the separate process should duplicate all threads
    -with multiprogamming ,we try to use this time producively .
 -serveral processess are kept in memory at one time.
 when one process has to wait,the os takes the CPU away from that process and gives the CPU to another process  and this pattern continue.
- 
- 
- 
+ ############### CPU and I/O burst cycles ############
+process execution consists of a cycle of CPU execution and I/O wait,process alternate b/w these two states.
+
+  ** process execution begins with a **
+* cpu burst that is followed by an
+* I/O burst which is follwed by another
+* CPU burst ,then another
+* I/O burst,and so on.. 
 
 
 
