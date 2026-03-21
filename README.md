@@ -1233,9 +1233,24 @@ so on ............
  Whereever the CPU become idle,the OS must select one of the proceesses in the ready queue to be executed.The selection process is carried out by the short-term scheduler (or cpu scheduler).The scheduler selects a process from the processess in memeory that are redy to execute and allcations the cpu to that proecess.   
 
  *Dispatcher:-The dispatcher is the module that gives control of the cpu to the process selected by the short-term scheduler.The time it takes for the dispatcher to stop one process and start another running is known as the dispathc latency.
+ **CPU-scheculing decisions make take place under the following four circumstances:-**
+ * when a process swithces from the running state to the waiting state
+ * when a process switches from the running state to the ready state (for example,when an interrupt occurs)
+ * when a process swithes from the waiting state to the ready state (for example,at completion of I/O)
+ * when a process terminates.
+   * For situations 1 and 4 ,there is no choice in terms of scheduling .A new process (if one exists in the ready queue) must be selected for execution.However,there is a choice for situation 2 and 3.
+   * when scheduling takes place only under circumstances 1 and 4 ,we say that the scheduling scheme is nonpreeptive or cooperative; otherwise,it is preemptive.
+     ########### scheduling criteria       ########
+     
+1) CPU utilization=>We want to keep the CPU as busy as possible.Conceptually,CPU utilization can range from 0 to 100 percent,In a real system ,it should range from 40 percent (for a lightly loaded system ) to 90 percent (for a heavily used system).
  
+ 2)Throghput =>If the cpu is busy executing procesess,then work is being done.One measure of work is the number of processess that are completed per time unit,called throughput
  
-       
+ 3)Turnaround time =>From the point of view of a particular process,the important criterian is how long it takes to execute that process.The interval from the time of submission of a process to the time of completetion is the turnaround time.Turnaround time is the sum of the periods spent waiting to get into memory, waiting in the ready queue,executing on the cpu ,and doing  I/O.
+ 
+ 4)Waiting time => The cpu scheduling algorithm does not affect the amount of time during which a process executes or does I/O;it affects only the amount of time that a proceess spends waiting in the ready queue.Waiting time is the sum of the periods spent waiting in the ready queue.
+ 
+ 5)Response time =>In an Interview system,turnaround time may not be the best criterian.often a process can product some output fairly early and can continue computing new results while previous results are being output to the user.Thus ,another measure is the time from the submission of a request until the first response is produced.This measure,called response time ,is the time it takes to start respondin,not the time it takes to output the response.The turnaround time is generally limited by the spend of the output device.
     
     
   
