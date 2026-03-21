@@ -1227,8 +1227,8 @@ write to file |
 wait for I/O I/O burst      
 so on ............
 
-     ############## cpu and I/O burst cycles ##################
-      
+  
+  
      
        
     
