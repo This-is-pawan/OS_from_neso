@@ -1227,9 +1227,14 @@ write to file |
 wait for I/O I/O burst      
 so on ............
 
-  
-  
-     
+########### preemptive adn non-preemptive scheduling  ###########
+
+*CPU scheduler:-
+ Whereever the CPU become idle,the OS must select one of the proceesses in the ready queue to be executed.The selection process is carried out by the short-term scheduler (or cpu scheduler).The scheduler selects a process from the processess in memeory that are redy to execute and allcations the cpu to that proecess.   
+
+ *Dispatcher:-The dispatcher is the module that gives control of the cpu to the process selected by the short-term scheduler.The time it takes for the dispatcher to stop one process and start another running is known as the dispathc latency.
+ 
+ 
        
     
     
