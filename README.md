@@ -1262,12 +1262,30 @@ The average waiting time under the FCFS policy,however,is aften quite long.
 consider the following set of processes that arrive at time 0
 
 If the processes arrive in the order p1,p2,p3 and are served in FCFS,order we get the result shown in the following Gantt chart:
-0-30 
+0-30  
+*waiting time for p1=0ms
+*waiting time for p2=24ms
+*waiting time for p3=27ms
+ Average=0+24+27=>17ms
  
+ *This is reduction is substantial.thus,the average waiting time under an FCFS policy is generally not minimal and may vary substantially if the process's CPU burst time vary greaty.
  
-    
-  
-  
+ *The FCFS scheudling algorithm is nonpreemptive
+ *once the cpu has been allocated to a process, that process keeps the cpu until it releases the cpu,either by terminating or by requesting I/O .
+ 
+ *The FCFS algorithms is thus particularly trobulesome for time-sharing systems,where it is important that each user get a share of the cpu at regular intervals.
+ 
+   ######### First-come,First-served scheduling ############
+solved problems-1
+                     Convay Effect
+If process with higher burst time arrived before the processes with simpailer burst time,then ,smaller processes have to wait for a long time for longer processes to release the CPU                     
+consider the set of 5 process whose arrival time and burst time are given below : process id |arrival time | burst time 
+              p1           4             5
+              p2           6             4
+              p3           0             3
+              p4           6             2
+              p5           5             4  calcuate the average waiting time and average turnaround time,if FCFS scheduling algoritm is followed.
+             
   
   
   
