@@ -1285,9 +1285,41 @@ consider the set of 5 process whose arrival time and burst time are given below 
               p3           0             3
               p4           6             2
               p5           5             4  calcuate the average waiting time and average turnaround time,if FCFS scheduling algoritm is followed.
-             
-  
-  
+              
+############### scheduling algorithms (shortest-job-first-scheduling) ########### 
+* this algorithm associates with each process the length of the process's next cpu burst.
+* when the cpu is avaiable,it si assigned to the process that has the smallest next cpu burst,
+* if the next cpu bursts of two processes are the same,FCFS scheduling is used to break  the tie.
+* The SJF algorithm can be either preemptive or nonpreemptive
+* A more appropriate term for this scheduling method would be the Shortest-Next-CPU-Burst Algorithm
+* because scheduling depends on the length of the next cpu burst of a process ,rather than its total length.
+  **E.g of SJF scheduling (Non-preemptive)**
+  consider the following set of processes ,with the length of the cpu burst given in milliseconds:
+  Process Id | burst time
+  p1            6
+  p2            8
+  p3            7
+
+  ########### problem-1 SFJS ##########
+  An OS uses shortest remaining time first scheduling algorithm for preemptive scheduling of processes .consider the following set of processes with their arrival times and cpu burst times (in milliseconds).
+  processId , arrival time, burst time 
+  ############ Scheduling algorithms (priority scheduling)  ############
+  * A priority is associated with each process,and the cpu is allocated to the process with the highest priority
+  * Equal-priority processes are scheduled in FCFS order.
+  * An SJF algorithms is simply a priority algorithms where the priority is the inverse of the (predicted) next cpu burst.
+  * The larger the cpu burst,the lower the priority ,and vice versa
+  * priority schedulign can either preemtive or non-preemptive
+  * A preemptive priorty scheduling algorithms will preempt the cpu if the priority of the newly arrived process is higher than the prioty of the currently running process.
+  * A nonpreemptive privority scheduling algorithm algorithm will simply put the new process at the head of the read queue.
+    e.g
+    consider the following set of processes ,assumed to have arrived at time 0 in the order p1,p2,p3,p4,p5 with the length of the cpu burst given in milliseconds.
+    process id ,burst time ,priority
+    *p1         10              3
+    *p2         1               1
+    *p3         2               4
+    *p4         1               5
+    *p5         5               2
+    
   
   
   
