@@ -1251,7 +1251,20 @@ so on ............
  4)Waiting time => The cpu scheduling algorithm does not affect the amount of time during which a process executes or does I/O;it affects only the amount of time that a proceess spends waiting in the ready queue.Waiting time is the sum of the periods spent waiting in the ready queue.
  
  5)Response time =>In an Interview system,turnaround time may not be the best criterian.often a process can product some output fairly early and can continue computing new results while previous results are being output to the user.Thus ,another measure is the time from the submission of a request until the first response is produced.This measure,called response time ,is the time it takes to start respondin,not the time it takes to output the response.The turnaround time is generally limited by the spend of the output device.
-    
+
+ ########   Scheduling Algorithms  (First-come,First-served scheduling)  ########
+ *By far the simplest CPU-scheduling algorithm.
+ *The process that requests the CPU first is alloacted the CPU first.
+ *The implementation of the FCFS policy is easily managed with a FIFO queue.
+*when a process enters the ready queue,its PCB is linked onto the tail of the queue.
+*When the CPU is free,it is allocated to the process at the head of the queue.
+The average waiting time under the FCFS policy,however,is aften quite long.
+consider the following set of processes that arrive at time 0
+
+If the processes arrive in the order p1,p2,p3 and are served in FCFS,order we get the result shown in the following Gantt chart:
+0-30 
+ 
+ 
     
   
   
