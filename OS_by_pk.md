@@ -11,7 +11,7 @@ An **Operating System (OS)** is system software that **manages computer hardware
 ### Examples of Operating Systems
 
 * Microsoft Windows
-* Linux
+* Linux 
 * macOS
 * Android
 * iOS
