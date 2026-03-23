@@ -1373,10 +1373,50 @@ e.g 1) foreground processes (interface)
   -in addition ,foreground processes may have priority (externally defined) over background processes.
   -A multilevel queue scheduling algorithms portitions the ready queue into serveral separate queues.
      
-    
+-The processes are permanently assigned to one queue,generally based on some property of the process,such as memory size, process priorty,or process type.
+-Each queue has its own scheduling algorithm.
+e.g
+separate queues might be used for foreground and background processes.
+The foreground queue might be scheduled by an RR algorithm,while the background queue is scheduled by on FCFS algorithm.
+In addition,there must be scheduling among the queues,which is commonl implemented as fixed-priority preemptive scheduling.
+for e.g the forground queue may have absolute priority over the background queue.
+An e.g of a multilevel scheduling algorithm with five queues,listed below in order of priority:
+highest priority-->
 
+system processes 
+interactive processes 
+interactive editing processes
+batch processes
+student processes
+
+lowest priority-->
     
+########## scheduling algorithms(multilevel feedback-queue scheduling) ########### 
+The multilevel feedback-queue scheduling algorithm allows a process to move between queues
+-The idea is to separate processes according to the characteristics of their cpu bursts,
+- if a process uses too much cpu time,it will be moved to a lower-priority queue.
+- this scheme leaves I/o-bound and interactive processes in the higher-priority queues.
+- in addition,a process that waits too long in a lower-priority queue may be moved to a higher-priority queue.
+  
+**In general,a multilevel feedback-queue scheduler is defined by the following parameters**:
+*The number of queues
+*The scheduling algorithm for each queue
+*The method used to determine when to upgrade a process to a higher priority queue.
+*The method used to determine when to demote a process to a lower priority queue 
+*The method used to determine which queue a process will enter when that process needs service.
+
+ ############    PROCESS SYNCHRONIZATION      ###########
+ A cooperating process is one that can affect or be affected by other processes executing in the system.
+ cooperation processes can either.
  
+ 1)directly share a logical address space (that is,both code and data)
+ 2)or be allowed to share data only through files or messages
+
+concurrent access to shared data may result in data inconsistency!
+in this chapter,we discuess various mechanisms to ensure-the orderly execution of cooperating process that share a logical address space,
+so that data  consistency is mentained.
+
+
 
 
 
