@@ -1349,12 +1349,28 @@ consider the set of 5 process whose arrival time and burst time are given below 
 
 ## Final Step
 - The CPU scheduler will then select the next process in the ready queue.
-
-   
+- 
+####### Round-Robin scheduling (Turnaround time and waiting time) ####
+   consider the following set of processes that arrive at time 0,with the length of the cpu burst given in milliseconds and time quantum takse as 4 milliseconds for RR scheduling.
+  
+  | process Id |  burst time |
+  p1               24
+  p2               3
+  p3               3
        
-   
-  
-  
+method:1 turn around time = completion time - arrival time
+waiting time= turn around time - burst time
+method:2 
+waiting time = last start time - arrival time -(preemption x time quqantum)
+
+
+############# Scheduling algorithms (multieve queue scheduling)   #########
+A class of scheduling algorithms has been created for situations in which processes are easiily classified into different groups 
+e.g 1) foreground processes (interface)
+  2) back ground processes (batch)
+  they have:-different response-time requirements 
+  -different scheduling needs
+  -in addition ,foreground processes may have priority (externally defined) over background processes.
   
     
     
