@@ -1320,6 +1320,25 @@ consider the set of 5 process whose arrival time and burst time are given below 
     *p4         1               5
     *p5         5               2
     
+    ######### Scheduling Algorithms  ###########
+ * The round-robin(RR) scheduling alogrithm is designed especially for timeshorting systems.
+ * It is similar to FCFS schedulin ,but preemption is added to switch between  processes.
+ * A small unit of time,called a time quantum or time since,is defined (generally from 10 to 100 milliseconds).
+ * The ready queue is treated as a circular queue.
+ * The CPU scheduler goes around the ready queue,allocation the CPU to each  processes for a time interval of up to 1 time quantum.
+**Implementation of round robin scheduling**
+*we keep the ready queue as a FIFO queue of processes
+*New processes are added to the tail of the ready queue.
+*The CPU scheduler picks the first process from the ready queue,sets a timer to interrupt after 1 time quantum,and dispatches the process.
+                                        | One of tw things will the happen |
+   *The process may have a cpu burst of less than 1 time quantum,                       *the cpu burst of the currently running process is longer than 1 time quantum,the timer will go off and will cause an interrupt to the os.
+   *The process itself will realse the cpu valuntarily                                  *A context switch will be executed,and the processes will be put at the tail of the ready queue
+   *The cpu scheduler will then proceed to the next process in the ready queue.
+*The cpu scheduler will then select the next process in the ready queue.
+
+   
+       
+   
   
   
   
