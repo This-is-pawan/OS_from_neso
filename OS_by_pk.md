@@ -1414,8 +1414,19 @@ The multilevel feedback-queue scheduling algorithm allows a process to move betw
 
 concurrent access to shared data may result in data inconsistency!
 in this chapter,we discuess various mechanisms to ensure-the orderly execution of cooperating process that share a logical address space,
-so that data  consistency is mentained.
-
+so that data  consistency is maintained.
+** producer consumer problem**
+A producer process produces information that is consumed by a consumer process.
+For example,a compiler may produce assembly code.which is consumed by an assembler.the assembler,in turn ,may produce object modules,which are consumed by the loader.
+* one solution to the producer-consumer problem uses shared memory.
+* To allow producer and consumer processes to run concurrently,we must have available a buffer of items that can be filled by the producer and emptied by the consumer.
+* This buffer will reside in a region memory that is shared by the producer and consumer processes.
+* A proudcer can produce one time while the consumer is consuming another item.
+* The producer and consumer must be synchronized ,so that the consumer does not try to consume an item that has not yet been produced.
+         **Two kinds of buffers**
+  unbunded buffer:places on practicel limit on the of the buffer.the consumer may have to wait for new items,but the producer can always produce new items.
+  bounded buffer:Assume a fixed buffer size. in this case,the consumer must wait if the buffer is empty,and proudcer must wait if the buffer is full.
+  
 
 
 
