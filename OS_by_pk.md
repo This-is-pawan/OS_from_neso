@@ -1371,8 +1371,8 @@ e.g 1) foreground processes (interface)
   they have:-different response-time requirements 
   -different scheduling needs
   -in addition ,foreground processes may have priority (externally defined) over background processes.
-  
-    
+  -A multilevel queue scheduling algorithms portitions the ready queue into serveral separate queues.
+     
     
 
     
