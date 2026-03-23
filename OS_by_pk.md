@@ -1326,15 +1326,29 @@ consider the set of 5 process whose arrival time and burst time are given below 
  * A small unit of time,called a time quantum or time since,is defined (generally from 10 to 100 milliseconds).
  * The ready queue is treated as a circular queue.
  * The CPU scheduler goes around the ready queue,allocation the CPU to each  processes for a time interval of up to 1 time quantum.
-**Implementation of round robin scheduling**
-*we keep the ready queue as a FIFO queue of processes
-*New processes are added to the tail of the ready queue.
-*The CPU scheduler picks the first process from the ready queue,sets a timer to interrupt after 1 time quantum,and dispatches the process.
-                                        | One of tw things will the happen |
-   *The process may have a cpu burst of less than 1 time quantum,                       *the cpu burst of the currently running process is longer than 1 time quantum,the timer will go off and will cause an interrupt to the os.
-   *The process itself will realse the cpu valuntarily                                  *A context switch will be executed,and the processes will be put at the tail of the ready queue
-   *The cpu scheduler will then proceed to the next process in the ready queue.
-*The cpu scheduler will then select the next process in the ready queue.
+
+   
+# Implementation of Round Robin Scheduling
+
+- We keep the ready queue as a FIFO (First-In, First-Out) queue of processes.
+- New processes are added to the tail of the ready queue.
+- The CPU scheduler picks the first process from the ready queue, sets a timer to interrupt after one time quantum, and dispatches the process.
+
+## One of two things will happen:
+
+### Case 1: Process finishes early
+- The process may have a CPU burst of less than one time quantum.
+- The process itself will release the CPU voluntarily.
+- The CPU scheduler will then proceed to the next process in the ready queue.
+
+### Case 2: Process exceeds time quantum
+- The CPU burst of the currently running process is longer than one time quantum.
+- The timer will go off and cause an interrupt to the OS.
+- A context switch will be executed.
+- The process will be placed at the tail of the ready queue.
+
+## Final Step
+- The CPU scheduler will then select the next process in the ready queue.
 
    
        
