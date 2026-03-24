@@ -1449,7 +1449,7 @@ The critical-section problem is to design a protocol that the processes can use 
 * 2) progress: If no process is executing in its critical section and some processes wish to enter their critical sections, then only those processes that are not executing in their remainder sections can participate in the decision on which will enter its ciritical section next , and this selection cannot be postponed indefinitely.
 * 3)Bounded waiting:There exists a bound,or limit,an the no. of times that other processes are allowed to enter their critical section after a process has made a request to enter its critical section and before that requrest is granted.
 
-#############    peterson's solution  ###########
+#############    peterson's solution (software based) ###########
 *A classic software based solution to the critical section problem.
 *may  not work correctly on modern computer architectures.
 *However,it provides a good algorithmic description of solving the critical-section problem and illustrates some of the complexities involved in designing software that addresses the requirements of mutual exclusion progress,and bounded waiting requirments.
@@ -1474,11 +1474,26 @@ do {
 flag [i]=true;
 turn=j;
 while(flag[j]&& turn==[j]);
+
 critical section
+
 flag[i]=false;
+
 remainder section
 
 }while(TRUE):
+
+###############  test and set lock (hardware based)    #############
+*A hardware soultion to the synchronization problem.
+*There is a shared lock variable which can take either  of the two values,0 or 1.
+*before entering into the critical section,a process inquires about the lock.
+*if it is locked it keeps it takes the lock and executes the critical section.
+boolean testAndSet (boolean*target){
+boolean rv=*target;
+*target=TURE;
+return rv;        (atomic operation  )
+}
+
 
 
 
