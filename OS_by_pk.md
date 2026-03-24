@@ -1428,6 +1428,30 @@ For example,a compiler may produce assembly code.which is consumed by an assembl
   bounded buffer:Assume a fixed buffer size. in this case,the consumer must wait if the buffer is empty,and proudcer must wait if the buffer is full.
   
 
+############ The critical-section problem  #############
+consider a system consisting of n processes {P0,P1,P....}
+each process has a segment of code called a  critical section
+in which the process may be changing common variable ,updating a table writing a file , and so on.
+when one process is executin in its criicial section,no other process is to be allowed to execute in its critical section.
+That is ,no two processes are executing in their ciritical sections at the same time.
+The critical-section problem is to design a protocol that the processes can use to cooperate.
+* Each process must request permission to enters its critical section.
+* The section of code implementing this request is the entry section.
+* The critical section may be followed by an exist section.
+* The remaining code is the remainder section.
+* do
+  { entry section critical-seciton exist-section remanider-section } while (true)
+    figure:general structure of a typical process.
+
+  
+* A solution to the critical-section problem must satisfy the following three requirments:
+* 1)mutual exculsion:If process P is executing in its critical section, then no other processes can be executing in their critical section.
+* 2) progress: If no process is executing in its critical section and some processes wish to enter their critical sections, then only those processes that are not executing in their remainder sections can participate in the decision on which will enter its ciritical section next , and this selection cannot be postponed indefinitely.
+* 3)Bounded waiting:There exists a bound,or limit,an the no. of times that other processes are allowed to enter their critical section after a process has made a request to enter its critical section and before that requrest is granted.
+
+#############    peterson's solution  ###########
+
+
 
 
 
