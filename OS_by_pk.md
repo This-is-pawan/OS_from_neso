@@ -1616,9 +1616,81 @@ signal(mutex);//reader leaves
 ```
 ############### classic problems of synchronization(The dining-philosophes problem)     ##############
 
+He is going to complete
 
-     
-     
+###############  Monitors ###################
+*A high level abstraction that provides a convenient and effective nedanism for process synchronization.
+* A monitor type presents a set of programmer-defined operations that provide mutual exclusion within the monitor.
+* The monitor type also contains the declaration of variable whose values define the state of an instance of that type,along with the bodies of procedures or functions that operate on those variables.
+* 
+syntax of a monitor
+monitor monitor_name {
+//shared variable declarations
+procedure P1(...){...}
+procedure P2(...){...}
+procedure Pn(...){...}
+initilization code(...){
+...
+}
+
+}
+* A procedure defined within a monitor can access only those variables declared locally within the monitor and its formal parameters.
+* similarly ,the local variable of a  monitor can be accessed by only the local produres.
+* The monitor consturct ensures that only one process at a time can be active within the monitor.
+* condition construct- condition x,y;
+* The only operations that can be lnvoked an a condition variable are wait() and signal().
+*The operation x.wait(); means that the process invoking this operation is suspended until another process invokes x.signal();
+*The x.signal() operation resumes exactly one suspended process.
+  e.g figure also search it.
+########  Dinning-philosophers solution using monitors #######
+
+*we now illustrate monitor concept by presenting a deadlock-free solution to the dinning-philiosophers problem.
+*this solution imposes the restricion that a philosopher may pick up his chapsticks only if both of them are avaiable.
+*To code this solution ,we need to distinguish among three states in which we may find a philosophor .For this purpose,we introduce the following data structure:
+enum {thinking ,hungry,eating } state[5];
+*philosoher i can set the variable state [i]=eating only if his two neighbors are not eating(state[(i+4)%5]!=eating and (state[(i+1)%5]!=eating).
+*We also need to declare  condition self[5]; where philiosopher i can delay himself when he is hungry but it unable to obtain the chopsticks he needs.
+monitor dp{
+enum  {THINKING,HUNGRY,EATING} state [5];
+condition self[5];
+void pickup (int i){
+state [i]=HUNGRY
+test(i);
+if(state [i]!=EATING)
+self[i].wait();
+}
+void putdown(int i){
+state[i]=THINKING;
+test((i+4)%5);
+test((i+1)%5);
+}
+}
+void test(int i) {
+    if (state[(i + 4) % 5] != EATING &&
+        state[i] == HUNGRY &&
+        state[(i + 1) % 5] != EATING) 
+    {
+        state[i] = EATING;
+        self[i].signal();
+    }
+}
+
+void initialization_code() {
+    for (int i = 0; i < 5; i++) {
+        state[i] = THINKING;
+    }
+}
+   ########### process synchronization (solved problems (part-1))##########
+   question:consider the methods used by proccess P1 and P2 for accessing their critical sections wherever needed ,as given below.The initial values of shared boolean variables S1 and S2 are randomly assigned.
+   method used by P1 | method used by P2
+   while (S1==S2);        while(S1!=S2);
+   critical section       critical section
+   S1=S2                   S2=not(S1);
+   which one of the following statements describes the properties achieve?
+   a)mutual exculsion but not progress
+   b)progress but not mutual exculsion
+   c)neither mutual exclusion nor progress
+   d)both mutual exclusion and progress
    
    
    
