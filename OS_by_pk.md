@@ -1614,6 +1614,8 @@ signal(wrt);//writers can enter
 signal(mutex);//reader leaves
 }while(true)
 ```
+############### classic problems of synchronization(The dining-philosophes problem)     ##############
+
 
      
      
