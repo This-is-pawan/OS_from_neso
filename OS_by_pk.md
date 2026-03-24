@@ -1450,6 +1450,37 @@ The critical-section problem is to design a protocol that the processes can use 
 * 3)Bounded waiting:There exists a bound,or limit,an the no. of times that other processes are allowed to enter their critical section after a process has made a request to enter its critical section and before that requrest is granted.
 
 #############    peterson's solution  ###########
+*A classic software based solution to the critical section problem.
+*may  not work correctly on modern computer architectures.
+*However,it provides a good algorithmic description of solving the critical-section problem and illustrates some of the complexities involved in designing software that addresses the requirements of mutual exclusion progress,and bounded waiting requirments.
+
+*peterson's solution is restricted to two processes that alternate execution b/w their critical sections and remainder section.let's call the processes p1 and p2
+peterson's solution requires two data items to be shared b/w the two process:
+boolean flag[2]:used to indicates if a process is ready to enter its critical section.
+int turn:indicates whose turn it is to enter its critical-section
+strutcure of process p1 in peterson's solution
+do {
+flag [j]=true;
+turn=i;
+while(flag[i]&& turn==[i]);
+critical section
+flag[j]=false;
+remainder section
+
+}while(TRUE):
+ 
+**boolean flag[2]**
+do {
+flag [i]=true;
+turn=j;
+while(flag[j]&& turn==[j]);
+critical section
+flag[i]=false;
+remainder section
+
+}while(TRUE):
+
+
 
 
 
