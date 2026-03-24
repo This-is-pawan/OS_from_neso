@@ -1494,11 +1494,27 @@ boolean rv=*target;
 return rv;        (atomic operation  )
 }
 
+########### Semaphares  #######
+* semaphore proposed by edsger dijkstra, is techinque to manange concurrent process by using a simple interger value ,which is known as a semaphore
+* semaphore is simply a variable which is non-negative nd shared b/w threads,This variable is used to solve the critical section problem and to acheive process synchronization in the multiprocessing environment.
+* A semphore S is an integer variable that apart from initialization is accessed only through two standard atomic operations wait() and signal().
+wait () -> p [from dutch word proberen,which means "to test"]
+wait () -> V [from the dutch word verhogen,which means "to increment"]
+definition of wait():P(semaphore S){
+  while (s<=0);
+  //no operation
+  s--;
+  }
+  
+  definition of signal():V(semaphore S){
+  s++;
+  }
+All the modifications to the integer value of the semaphore in the wait() and singal () operations must be executed indivisibly.That is ,when one process modifies the semaphore value,no other process can simulaneously modify that same semaphore value.
 
-
-
-
-
+**Types of semaphores***
+1)Binary semaphore:The value of a binary sempahore can range only b/w 0 and 1.On some systems,binary sempaphores are known as mutex locks, as they are locks that provide mutual exculsion.
+2)counting semaphore:
+Its value can range over an unrestricted domain.it is to control access to a resource that has multiple instances.
 
 
 
