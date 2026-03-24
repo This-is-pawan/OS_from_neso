@@ -1516,15 +1516,105 @@ All the modifications to the integer value of the semaphore in the wait() and si
 2)counting semaphore:
 Its value can range over an unrestricted domain.it is to control access to a resource that has multiple instances.
 
+** disadvantages**
+*The main disadvantage of the semaphore definition that was discussed is that it requires busy waiting
+*while a process is in the critical section,any other process that tries to enter its critical section must loop continuosly in the entry code.
+* busy waitig wastes cpu cycles that some other process might be able to use productively.
+* this type of semaphore is also called a spinlock because the process "spins" while waiting for the lock.
+      ***** to overcome the need for busy waiting ,we can modify the definition of hte wait() and signal() semaphore operations******
+**when a process executes the wait() operations and finds that the semaphore value is not positive ,it must wait.
+*However ,rather thatn engaging in busy waiting the process can block itself.
+*The block operation places a process into a waiting queue associated with the semaphore and the state of the process is switched  to the waiting state.
+**then contol is transfereed to the cpu schedular,which selects another process to excute.
+  ** Deadlocks and starvation **
+  *the implementation of a semaphore with a waiting queue may result in a situation where two or more processess are waiting indefinitely for an event that can be caused only by of the waiting processes.
+  *the event in question is the execution of a singal() operation.when such a state is reached these processes are said to be deadlocked.
+  PO             | P1
+wait(S);           wait(Q);
+wait(Q);           wait(S)
+.......             ........
+signal(S);          signal(Q);
+signal(Q);          signal(S);
 
-
-    
+  ####### classic problems of synchronization (the bounded-buffer problem)    ######
+*There is buffer of n slots and each slot is capable of storing one unit of data.
+There are two processes running namely ,producer and consumer which are operating on the buffer
+*The producer tries to insert data into an empty slot of the buffer. 
+*The consumer tries to remove data from a filled slot in the buffer
+*The consumer must not remove data when the buffer is empty.
+*The producer and consumer should not insert and remove data simultaneously.
+ **Solution to the bounded buffer problems using semaphores**
+we will make use of three semaphores:
+1)m(mutex),a binary semaphore which is used to acquire and release the lock.
+2) empty,a counting semaphore whose initial values is the no. of slots in the buffer,since ,initially all slots are empty.
+3)full,a counting semaphore whose initial value is 0
+  ```js
+  producer
+  do{
+  wait(empty);//wait until empty>0 
+  and then decrement 'empty';
+  wait(mutex)//acquire lock
+  // add data to buffer
+  signal(mutex);//release lock
+  signal(full);//increament 'full'
+  }while(TRUE)
   
+```
+```js
+consumer
+do{
+  wait(full);//wait until full>0 
+  and then decrement 'full';
+  wait(mutex)//acquire lock
+  // remain data from buffer
+  signal(mutex);//release lock
+  signal(empty);//increament 'empty'
+  }while(TRUE)
+  
+```
+############# classic problems of syschronization(The readers-writers problem) ###############     
+*A database is to be shard among serveal concurrent processes.
+*Some of these processes may want only to read the database,whereas others may want to update (that is ,to read only and write ) the database.
+*we distinguish b/w these two types of processes by referring to the former as readers and to the later as  writers.
+*obviously ,if two readers access the started data simultaneously no adverse affects will result.
+*however ,if a writer and some other thread (either a redder or a writer ) access the database simultaneously ,choos may ensue.
 
+the ensue that these diffculties do not arise,we require that the writers have exclusive access to the shared database.
+This synchronization problem is refered to as the readers-writers problem.
+**sloution to the readers-writers problem  using semaphores:**
+we will make use of two semaphoes and an integer variable:
+1)mutex,a semaphore(initialize to 1) which is used to ensure mutual exculsion when readcount is updated l.e when any reader enter or exist from the critical section.
+2)wrt,a semaphore (intialized to 1) common to both reader and writer processes 
+3)readcount,an integer variable (initialized to 0) that keeps track of how many processes are currently reading the object.
+```js
+writer process
+do{
+// writer requests for critical section
+wait(wrt);
+// performs the write
+//leaves the critial section
+signal(wrt);
 
+}while(true);
 
+```
+```js
+reader process
+do{
+wait(mutex);
+reader++ //The no. of reader has now increased by 1
+if(readcnt==1)
+wait(wrt) //this ensure no writer can enter if there is even one reader
+signal(nutex);//other readers can enter while this current read is inside the critical section
+//current reader performs reading here
+wait(mutex);
+readcnt --;
+if(readcnt==0) // no reader is left in the critical section
+signal(wrt);//writers can enter
+signal(mutex);//reader leaves
+}while(true)
+```
 
-     
      
      
    
