@@ -1694,7 +1694,49 @@ void initialization_code() {
    
    
    
+   ########### **deadlocks**  ################
+   **definition**:Deadlock is a situation where a set of processes are blocked because each process is holding a resource and waiting for another resource acquired by some other process.
+   e.g A customer tells a shopkeeper, give me the maggi first,and then i will pay you,conversel the shopkeeper insists,give me the money first and then i will give you the maggi this situation is also called deadlock.
    
+   necessary condition for deadlocks:
+   1)Mutual exclusion:-If two process cannot use same resource at same time.
+   2)Hold and wait:-A process waits for same resources while holding and another resource at the same time.
+   3)No preemption:-The process which once scheduled will be executed till the completion.
+   4)Circular wait:-All the processes must be waiting for the resource in a cycle manner.
+   
+
+   ************
+   * In a multiprogramming environment,serveral processes may complete for a finite no. of resources.
+   * A processes requests resources and if the resources are not available at that tiem,the process enters a waiting state.
+   * sometimes ,a waiting process is never again able to change state,because the resource it has requested are held by other waiting processes.
+* this is called a deadlock.
+  
+   ** system model**
+  A system consists of a finite no. of resources to be distributed among a no. of competing processes.
+The resource are partitioned into serveral types ,each consisting of some no. of identical instance.
+e.g of resource type:-
+memoryspace ,cpu cycle ,files,I/O devices->printers,dvd
+
+Under the normal mode of operation,a process may utilze a resource in only the following sequence:
+1)Request:-If the requrest cannot be granted immediatlely (for e.g if the resource is being used by another process )  then the requesting process must wait until it can acuire the resource
+2)Use:-The process can operate onthe resource(for e.g ,if the resource is a printer,the process can print on the printer)
+3)Release:-The process relases the resource.
+######### deadlock characterization ########
+In a deadlock,processes never finish executing and system resources are tied up,preventing other jobs from starting.
+
+features that characterize deadlocks-Necessary conditions:
+A deadlock sitution can arise if follwing   four condition hold simultaneously in a system: I have written on this(above)
+########## Resource-Allocation graph #######
+Deadlocks can be described more precisely in terms of a directed graph called a system resource-allocation graph.
+This graph consists of a set of vertices V and a set of edges E.
+The set of vertices V is partitioned into two different types of nodes:
+p={p1,p2,p3........} the set consists of all active processes in the system,and
+R={R1,R2,R3,.....} the set consisting of all resources types in the system.
+[requrest edge]
+A directed edge from process P1 to resource type Rj P->Rj signifies that process Pi has requested an instance of resource type Rj and is currently waiting for that resource.
+[Assignment Edge]
+A directed edge from resource type Rj to process Pj Rj->Pi signifies that an instance of resource type Rj has been allocated to process Pi,
+
  
    
 
