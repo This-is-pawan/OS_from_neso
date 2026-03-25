@@ -1741,7 +1741,29 @@ A directed edge from resource type Rj to process Pj Rj->Pi signifies that an ins
 *Resources are denoted using rectangles.since a resource type Rj,may have more than one instance ,we represent each such instance as a dot within the rectangle.
 
    
+################ methods for handling deadlocks       ######################
+we can dead with the deadlock problem in one of three ways:
+1)we can use a protocol to prevent or avoid deadlocks, ensuring that the system will never enter a deadlock state.
+2)we can allow the system to enter a deadlock state,detect it and recover.
+3)we can ignore the problem altogether and pretend that deadlocks never occur in the system.
+      To ensure that deadlock never occur ,the system can use either a deadlock prevention or a deadlock-avoidance scheme.
+      provides a set of methods for ensuring that at least one of the necessary  conditions cannot hold:1)mutual exclusion 2) Hold and wait 3)No preemption 4)circular wait
+requires that the os system be given in advance additional information concerning which resources a process will request and use during its lifetime.
+with this additional knowleadge,it can decide for each request whether or not the process should wait.
+mehtods:
+*if a system does not employ either a deadlock-prevent or a deadlock avoidance algorithm,then a deadlock situation may arise.
+*In this environment the system can provide an algorithm that examine the state of the system to determine wheather to deadlock has occured and an algorithms to recover from the deadlock(if a deadlock has indeed occurred).
+*if a system ensures that a deadlock will never occur nor provides a mechanism for deadlock detection and recovery,then we may arrive at a situation where the system 
+is in a deadlocked state yet has no way of recognizing what has happened.
 
+In this case,the undetectd deadlock will result in deterioration of the system's performance ,because resources are being held by processes that cannot run and because more and more processes, as they make requests for resoures ,will enter a deadlock state.
+ Eventually ,the system will stop functioning and will need to be restsated manually.
+  
+################ deadlock prevention      ###############
+
+      
+                                                   
+      
   
 
 
