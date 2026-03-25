@@ -1737,7 +1737,9 @@ A directed edge from process P1 to resource type Rj P->Rj signifies that process
 [Assignment Edge]
 A directed edge from resource type Rj to process Pj Rj->Pi signifies that an instance of resource type Rj has been allocated to process Pi,
 
- 
+*Processes are represented using circles.
+*Resources are denoted using rectangles.since a resource type Rj,may have more than one instance ,we represent each such instance as a dot within the rectangle.
+
    
 
   
