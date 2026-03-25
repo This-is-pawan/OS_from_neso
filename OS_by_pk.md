@@ -1760,6 +1760,45 @@ In this case,the undetectd deadlock will result in deterioration of the system's
  Eventually ,the system will stop functioning and will need to be restsated manually.
   
 ################ deadlock prevention      ###############
+For a deadlock to occur,each of the four necessary conditions must hold:
+1)Mutual excusion
+2)Hold and wait 
+3)No preemption 
+4)circular wait
+By ensuing that at least one of these conditions cannot hold,we can prevent the occurence of a deadlock.
+  1)mutual exclusion:The mutual-exclusion condition must hold for nonharable resoures.
+  e.g A printer cannot be simuitaneously shared by several processes.
+  sharable resouces in contrast ,do not require mutually exclusive access and thus cannot be involved in a deadlock.
+  e.g Read-only files.if several processes attempt to open a read-only file at the same time,they can be granted simultaneouse access to the file.A processes never needs to wait for a sharable resource.
+  In general,however we cannot prevent deadlocks by denying the mutual-exclusion conditon ,because some resource are intrinsically nonsharable.
+  2)Hold and wait
+  To ensure that the hold-wait condition never occurs in the system we must guarantee that,whenever a processes requests a resource,it does not hold any other resources.
+  one protocol that can be used requires each process to request and be allocated all its resources before it begins execution.
+  An alternative protocol allows a process to request resource  only when it has none.A process may reques some resource and use them.before it can reuest any additional resource ,however ,it must release all the resource that it is currently allocated.
+  Both these protocols have two main disadvantages:
+  1)Resource utilization may be law 2)Starvation is possible.
+  
+  3)No Preemption
+  To ensure that this condition does not hold ,we can use the following protocol:
+  if a process is holding some resources and requests another resource that cannot be immediatley allocated to it (that is ,the process must wait),then all resources currently being held are preempted.
+  Alternatively,if a process requests some resource,we first check whether they are available,if they are we allocate them if they are not ,we check whether they are allocated to some other process that is waiting for additional resouces ,if so we prempt the desired resources from the waiting process and allocate them to the requesting process.
+  this protocol is often applied to resource whose state can be easily saved and restored later,such as CPU registers and memory space,it cannot gernally be applied to such  resources as printers and tape drives.
+  4)circular wait:
+  A way to ensure that this condition never holds is to impose a total ordering of all resource types and to require that each process requests resources in an increasing order of enumeration.
+  e.g suppose process P1 is allocated Resources R5.Now if P1 requests for resources R4 and R3 (which are lesser than R5),such requests will not be granded .only requests for resource greater than R5 will be grandted.
+  Developing an ordering ,or hierachy,in itself does not prevent deadlock .it is up to application developers to write programs that follow the ordering.
+  
+  ############# Deadlock Avoidance (safe state) #################
+  An alternative method for avoiding deadlocks is to require additonal information about how resources are to be requested.
+  e.g in a system with one tape drive and one printer,the system might need to know that process P will reuest first that tape driver and then the printer before releasing both resources .whereas process Q will request fist the printer and then the tape drive.with this knowledge of the complete sequence of requests and release fo reach process, the system can decide for each request whether or not the process should wait in order to avoid a possible future deadlock.
+  each request requires that in making this decision the system consider the resources currently available,the resources currently alloacted to each process,and the future requests and releases of each process.
+     
+  **safe state**
+  A state is safe if the system can allocate resources to each process (up to its maximum) in some order and still avoid a deadlock.
+  
+  
+    
+  
 
       
                                                    
