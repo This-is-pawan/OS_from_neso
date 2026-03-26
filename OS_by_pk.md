@@ -1796,8 +1796,11 @@ By ensuing that at least one of these conditions cannot hold,we can prevent the 
   **safe state**
   A state is safe if the system can allocate resources to each process (up to its maximum) in some order and still avoid a deadlock.
   
-  
+ ########### Deadlock avoidance (resource-allocation-graph algorithm) ###########
     
+  ############## deadlock avoidance (Banker's algorithm )    ############
+  An algorithm that can be used for deadlock avoidance in resource allocation systems with multiple instances of each resource type.
+  ############# e.g of safety algorithm #################
   
 
       
