@@ -1800,7 +1800,41 @@ By ensuing that at least one of these conditions cannot hold,we can prevent the 
     
   ############## deadlock avoidance (Banker's algorithm )    ############
   An algorithm that can be used for deadlock avoidance in resource allocation systems with multiple instances of each resource type.
-  ############# e.g of safety algorithm #################
+  ############# e.g of safety algorithm in bancker's #################
+  ############# e.g of resource-request algorithm in banker's #################
+  ########### Deadlock detection (resource with single instances) #############
+  ########### Deadlock detection (resource with multiple instances) with e.g #############
+  ########### Recovery from Deadlock process termination #############\
+  possibility-1:inform the operator that a deadlock has occurred and let the operator  
+  possibility-2:let the system recover from the deadlock automatically.
+  how to beark from the deadlock?
+  option1: abort one or more processes to break the circular wait.
+  option2:preempt some resources from one or more of the deadlocked processes.
+  ######### process termination ###
+To eliminate deadlocks by aborting a process,we use one of two methods.
+* abort all deadlocked processes:Will break cycle,but at great expense.The deadlocks processes may have computed for a long time,and the results of these partical computation must be discarded and probably will  have to be recomputed later.
+*Abort one process at a time untill the deadlock cycle is eliminated:
+Incurs considerable overhead,since after each process is aborted,a deadlock-detection alogrithm must be invoked to determine wheter any processes are still deadlocked.
+############### Aborting a process may not be easy   ###########
+some e.gs: *if the process was in the midst of updating a file,terminating  it will leave that file in an incorrect state
+*if the process was in the midst of porinting data an a printer ,the system must reset the printer to a correct state before printing the next job.
+
+If the partial termination method is used:
+*we must determine which deadlocked process(or process)should be terminated.
+*this determination is a policy decision,similar to cpu-scheduling decisions.
+we should abort those processes whose termination will incur the minimum cost.
+
+** some factors that affect which process(es) are chosen to be aborted:
+1)what the pririty of the process is.
+2) how long the process has computed and how much longer the process will compute before completing its designated task.
+3)How many and what type of  resources the process has used (for example ,whether the resources are simple to preept )
+
+4) How many processes will need to be terminated.
+5)whether the process is interactive or batch.
+6)how many more resource the process needs in order to complete.
+
+  
+  
   
 
       
