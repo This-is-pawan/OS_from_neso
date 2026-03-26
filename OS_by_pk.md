@@ -1833,8 +1833,18 @@ we should abort those processes whose termination will incur the minimum cost.
 5)whether the process is interactive or batch.
 6)how many more resource the process needs in order to complete.
 
+  ########### Recovery form deadlock (resource preemption)   #############
+  Here we successively preempt some resouces from processes and give these resources to other processes until the deadlock cycle is broken.
+  If preeption is required to deal with deadlocks,then three issues need to be addressed:
+  1)selecting a victim: (search more about these point)
+  2)rollback 
+  3)starvation 
   
-  
+  ######## solve problem (do this due to interview purpose)    ##########
+######################## end the deadlock ##################
+########################## Memory management  ###############################
+
+
   
 
       
