@@ -1843,11 +1843,58 @@ we should abort those processes whose termination will incur the minimum cost.
   ######## solve problem (do this due to interview purpose)    ##########
 ######################## end the deadlock ##################
 ########################## Memory management  ###############################
+ -> The main purpose of a computer system is to execute porgrams.
+ -> During execution ,these programs,together with the data they access,must be in main memory (at least partially).
+ ->In cpu scheduling we showed how the cpu can be shared by a set of processes as a result of his 
+ CPU utilization as well as speed of the computers's response to its users could be improved.
+ To realize this increase in performace,however we must keep serveral processes in memory that is we must share memory.
+TOPICS TO BE DISCUSSED:
+*various ways to manage memory.
+*memory management algorithms:
+*primitive bare-machine approach.
+*paging strategies.
+*segmentation strategies.
+ 
+ **main memory(basic hardware)** 
+ *memory consists of a large array  of words or bytes,each with its own address.
+ *The  CPU fetches instructions from memory according to the value of the program counter.
+ *These instructions may cause additional loading from and storing to specific memory addresses.
+ ** A typical instruction-exeution cycle ,first fetches on instruction from memory.
+ The instruction is then decoded and may cause operands to be fetched from memory
+ After the instruction has been exected on the operands,results may be stored back in memory.    
+ ** Basic hardware **
+ The cpu can directly access only - registers built into the processor and main memory 
+ * There are machine instructions that take memory addresses as arguments,but none that take disk addresses.
+ * so any instructions in execution,and any data being used by the instructions,must be in one of these direct-acces storage devices.
+ * if the data not in memory ,they must be moved there before the cpu can operate on them.
+**cpu cycle time for accessing memories **
+regisers-accessible within one cycle of the cpu clock.
+Most CPUs can decode instructions and perform simple operations on register contents at the rate of one or more operations per clock tick.
 
+main memory:access may take many cycles of the cpu to complete in this case,the processor normally needs to stall, since it does not have the data required to complete the instruction that it is executing.
+This situation is intolerable because of the frequency of memory accesses .
+Remedy-Add fast memory b/w the cpu and main memory a memory buffer used to accommodate a speed differential, called a cache.
+  ############ Protection of Os from unathorized access #################
+  * The operating system has to be protected from access by user processes.
+  * in addition,user processess must be protected from one another.
+  * this protection must be provided by the hardware.
+**How can this be done? **
+Ensure that each process has a separate memroy space.
+To do this ,we need the ability to determine the range of legal addresses that the processes may access and to enusure that the process can access only these legal addressess.
+For this we use two registers -BASE and LIMIT
+0            OS 
+256000     process
+30000       process
+420940     process - 300940 -> base
+880000    process - 120900 -> limit
+1024000   process 
 
-  
-
-      
+ A base and a limit register define a logical address space.
+ The base register holds the smallest legal physical memory address.
+ The limit register specifies the size of the range.
+ For e.g if the base register holds 300040 and limit register is 120900 ,then the program can legally access all addresses from 300040 through 420940 (inclusive).
+ 
+ 
                                                    
       
   
