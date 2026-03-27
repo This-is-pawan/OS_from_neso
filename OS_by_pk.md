@@ -1893,7 +1893,9 @@ For this we use two registers -BASE and LIMIT
  The base register holds the smallest legal physical memory address.
  The limit register specifies the size of the range.
  For e.g if the base register holds 300040 and limit register is 120900 ,then the program can legally access all addresses from 300040 through 420940 (inclusive).
- 
+
+
+ ########## address binding      ############
  
                                                    
       
