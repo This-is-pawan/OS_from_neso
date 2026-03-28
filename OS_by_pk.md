@@ -1896,6 +1896,15 @@ For this we use two registers -BASE and LIMIT
 
 
  ########## address binding      ############
+ *Usually a program resides on a disk as a binary executable file ,
+ *To exexcuted ,the program must be brougjht into memory and placed within a process.
+ *Depending on the memory management in use ,the process may be moved be b/w disk and memory during its exeution.
+ *The processes on the disk that arae waiting to be brought into memory for execution form the input queue.
+ Input Queue-> select a process-> Loads it into memory-> Executes and acceses instructions and data from memory -> process terminates-> memory space is declared avaliable.
+ *Most systems allow a user process to reside in any part of the physical memory.Though address space of the computer stats at 00000 the first address of the user process need not be 00000.
+ *In most cases ,a user program will go through  serveral steps during COMPLETE TIME ,LOAD TIME,EXECUTION TIME beofore bring executed .
+ Address may be respresented in different ways during these steps.
+  
  
                                                    
       
