@@ -1961,7 +1961,76 @@ binding of instructions and data to memory addresses during
  Dynamic loading does nt require special support from the OS.
  It is responsibility of the users to design their programs to take advantages of such a method.
  
+ ######### Dynamic Linking and shared libraries ##########     
+ *When a program runs,apart from its own modules,it also needs to use certains systems libaraies as well.
+ *static Linking:-system language libraries are treadted like any other object module and are combined by the loader into the binary program image.
+ Disavantage:-Each program on a system must include a copy of its language libaray (or at least the routines refrenced by the program) in the executable image.
+
+ **Dynamic Linking:-checks to see whether the needed routine is already in memory.If not,the routine is loaded into memory.
+ The concept of dynamic linking is similar to that of dynamic loading,but here ,linking rather than loading,is postponed until execution time.
+
+
+ **with dynamic linking,a stub is included in the image for each library routine reference .
+ A small piece of code that indicates how to locate the appropriate memory-resident library routine or how to load the library if the routine is not already present.
+ *when the stub is executed,it checks to see whether the needed routine is already in memory.
+ *if not,the program loads the routine into memory.
+ *either way ,the stub replaces itself with the address of the routine and executes the routine.
+ *Thus,the next time that particular code segment is reached ,the libaray routine is executed direclty ,incurring no cost for dynamic linking.
  
+ ################ Swapping   ###############
+ *A process must be in memor to be executed.
+ *A process however,can be swapped tempararily out of memory to a backing store and then brought back into memory for continued execution.
+ e.g In a mutiprogramming environment with a round-CPU-scheduling algorithm.
+ when a quantum expires, the memory manger will start to swap out the process that just finished and to swap another process into the memory space that has been freed.
+
+ swapping of two processes using a disk as a backing store
+
+ OS(main memory) ->Swap-out & Swap-in P1,P2 (backing store)
+
+ **Memory space where swapping happens**
+ Normally:A process that is swapped out will be swapped back into the same memory space it occupied previously.
+ But it depends on the address binding mehtod.
+ if binding is done at assembly or load time:-The process cannot be easily moved to a different location.
+ If binding is done at execution time:-The process can be swapped into a different memory space,because the physical addresses are computed during execution time.
+  **Backing store**
+  swappiing requires a backing store.
+commonly a fast disk.
+
+*It must be large enough to accommondate copies of all memory images for all users.
+
+*It must provide direct access to these memory images.
+
+*The system maintains a ready queue consisting of all processes whose memory images are on the backing store or in memory and are ready to run.
+
+*Whenever the CPU scheduler decides to execute a process,it calls the dispatcher.
+
+*The dispatcher checks to see whether the next process in the queue is in memory .
+
+*It it is not ,and if there is no free memory region,the dispatcher swaps out a process.
+
+*It then  relods registers and transfers controls to the selected process.
+
+**swap time **
+*the context-switch time in a swapping system is fairly high.
+e.g let user process Size=10MB
+transfer rate of backing store=40MB per second
+actual transfer of the 10MB process to or from main memory takes
+10000KB/40000KB per second =>1/4 second=>250milliseconds
+assuming that no head seeks are necessory and assuming an average latency of 8 milliseconds,the swap time=258 milliseconds,
+since we must both swap out and swap ,in the total swap time is = 258x2=>516 milliseconds.
+since we must both swap and swap in the total swap time is=258x2=>516 milliseconds 
+*For efficient  CPU utilization ,we want the execution time for each process to be long relative to the swap time.
+*Thus ,in a round-robin CPU-scheduling algorithm,for e.g the time quantum should be substantially larger than 0.516 seconds.
+*The major part of the swap time is tansfer time.
+*The total transfer time is direclty proprotinal to the amount of memory swapped.
+
+**other factors that affect swapping***
+*A process must be completely idle in order to be swapped.
+*A process may be waiting for an I/O operation when we want to swap that process to free up memory .
+*if the I/O is asynchronously accessing the user memory for  I/O buffers,then the process cannot be swapped.
+
+
+
  
  
 
