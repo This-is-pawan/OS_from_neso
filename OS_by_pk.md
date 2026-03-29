@@ -2030,6 +2030,64 @@ since we must both swap and swap in the total swap time is=258x2=>516 millisecon
 *if the I/O is asynchronously accessing the user memory for  I/O buffers,then the process cannot be swapped.
 
 
+############### Memory Allocation  ############
+*how to allocate memory?
+divide memory into serveral fixed-sized partitions.
+     ⬇️
+each partition may contain exaclty one process.
+     ⬇️
+when a partition is free, a process is selected from the input queue and is loaded into the free partition.
+⬇️
+when the process terminates,the partition becomes avaliable for naother process.
+______________________________________________⬇️
+this is one of the simples mehtods for allocating memory.
+⬇️
+ search digram also  
+ 
+########### Dynamic storage allocation problem  ###########
+How to satisfy a request of size n from a list of free partitions/holes in main memory?
+solutions:-
+1)first fit :-*allocate the first hole that is big enough.
+*searching can start either at the beginning of the set of holes or where the previous first-fit search ended.
+*we can stop searching as soon as we find a free hold that is large enough.
+
+2)Best fit:-*allocate the smallest hole that is big enough.
+*we must search the entire list,unless the list is ordered by size.
+*This strategy produces the smallest lefthover hole.
+
+3)Worst fit:-
+*allocate the largest hole.
+*we must search the entire list,unless it is sorted by size.
+*this strategy produces the largest leftover hole.
+
+**Fragmentation**
+As processes are loaded and removed from memory ,the free memory space is broken into little pieces which results in fragmentation
+**Types of Fragmentations**
+1)External fragmentation:-It exists when there is enough total memory space to satisfy a request,but the available spaces are not contiguous.
+*storage is fragmented into a large no. of small holes.
+*This fragmentation problem can be server.In the worst case,we could have a blck of free (or wasted) memory b/w every two processes
+*if all these small piece of memory were in one big free block instead, we might be able to run serveral more processes.
+
+
+2)Internal fragmentation:-*it occurs when memory blocks assigned to processes are bigger than what the process actually needs.
+*some portion of memory is left unused ,as it cannot be used by another process.
+solution:-make use of best-fit approach for allocating memory segments to process.
+
+solution to external fragmentation
+** compaction**
+shuffle the memory contents so as to place all free memory together in one large black.
+problem:  * compaction is not always possible.
+*if relocation is static and is done at assembly or load time, compaction cannot be done.
+* it is possible only if relocation is dynamic and is done at execution time.
+  
+
+
+
+
+
+     
+
+
 
  
  
