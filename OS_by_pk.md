@@ -1868,13 +1868,15 @@ TOPICS TO BE DISCUSSED:
  * so any instructions in execution,and any data being used by the instructions,must be in one of these direct-acces storage devices.
  * if the data not in memory ,they must be moved there before the cpu can operate on them.
 **cpu cycle time for accessing memories **
-regisers-accessible within one cycle of the cpu clock.
+*regisers:-accessible within one cycle of the cpu clock.
 Most CPUs can decode instructions and perform simple operations on register contents at the rate of one or more operations per clock tick.
 
-main memory:access may take many cycles of the cpu to complete in this case,the processor normally needs to stall, since it does not have the data required to complete the instruction that it is executing.
+*main memory:-access may take many cycles of the cpu to complete in this case,the processor normally needs to stall, since it does not have the data required to complete the instruction that it is executing.
+
 This situation is intolerable because of the frequency of memory accesses .
 Remedy-Add fast memory b/w the cpu and main memory a memory buffer used to accommodate a speed differential, called a cache.
-  ############ Protection of Os from unathorized access #################
+
+  ############ Protection of Os from unathorized access (other problem)#################
   * The operating system has to be protected from access by user processes.
   * in addition,user processess must be protected from one another.
   * this protection must be provided by the hardware.
@@ -1900,13 +1902,13 @@ For this we use two registers -BASE and LIMIT
  *To exexcuted ,the program must be brougjht into memory and placed within a process.
  *Depending on the memory management in use ,the process may be moved be b/w disk and memory during its exeution.
  *The processes on the disk that arae waiting to be brought into memory for execution form the input queue.
- Input Queue-> select a process-> Loads it into memory-> Executes and acceses instructions and data from memory -> process terminates-> memory space is declared avaliable.
+ Input Queue-> select a process-> Loads it into memory-> Executes and acceses instructions and data from memory -> process terminates-> memory space is declared avaliable. 
  *Most systems allow a user process to reside in any part of the physical memory.Though address space of the computer stats at 00000 the first address of the user process need not be 00000.
- *In most cases ,a user program will go through  serveral steps during COMPLETE TIME ,LOAD TIME,EXECUTION TIME beofore bring executed .
+ *In most cases ,a user program will go through  serveral steps during COMPLETE TIME ,LOAD TIME,EXECUTION TIME beofore being executed .
  Address may be respresented in different ways during these steps.
- Source:-Address are generally symbolic (such as count).
- Compiler:-Typically binds these symbolic addresses to reclocatable addresses (such as "14 bytes from the beginning of this module")
- Linkage editor or Loader:-Binds the relocatable addresses to absoulte addresses (such as 7401).
+ *Source-Programe:-Address are generally symbolic (such as count).
+ *Compiler:-Typically binds these symbolic addresses to reclocatable addresses (such as "14 bytes from the beginning of this module")
+ *Linkage editor or Loader:-Binds the relocatable addresses to absoulte addresses (such as 7401).
 Each binding is a mapping from one address space to another.
  Binding of instructions and data to memory addresses during 
              **COMPILE TIME**
@@ -1939,6 +1941,26 @@ binding of instructions and data to memory addresses during
  Physical addresses:(in the range R + O to R + max for a base value R).
  The user generates only logical addresses and thinks that the process runs in locations 0 to max.
  The user program supplies logical addresses;these logical addresses must be mapped to physical addresses before they are used.
+ ################ Dynamic Loading ###################
+ *As we have discussed so far,the enire program and all data of process must be in physical memory for the process to execute.
+ *The size of a process is thus limited to the size of physical memory.
+ *To obtain better memory-space utilization,we can use dynamic loading.
+ 
+ ***with dynamic loading,a routine is not loaded until it is called.
+ *All routines are kept on disk in a relocatable load format.
+ *The main program is loaded into memroy and is executed.
+ *When a routine needs to call another routine the colling routine first checks to see whether the other routine has been loaded.
+ *If not,the relocatable liking loader is called to load the desired routime into memory and to update the program's address tables to reflect this change.
+ *Then control is passed to the newly loadedd routine.
+ 
+ **Advantabes**
+ *An unused routine is never loaded.
+ *This method is particularly useful when large amounts of code are needed to handle infrequently  occuring cases.
+ *although the total program size may be large,the portion that is used (and hence loaded) may be much smaller.
+ ____________________________________________________________
+ Dynamic loading does nt require special support from the OS.
+ It is responsibility of the users to design their programs to take advantages of such a method.
+ 
  
  
  
