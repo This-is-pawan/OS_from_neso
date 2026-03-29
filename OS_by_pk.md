@@ -2215,8 +2215,60 @@ This a variation of the hased page tables which is favarable for 64-bit address.
 *therefore ,a single page-table entry can store the mapping for multiple physical -page frames.
 *clustered page tables are particularly useful for spares address spaces, where memory references are non-contiguous and scattered thorghout that address space.
 
+#############  inverted page tables ###########
+*in most os ,a separate page table is maintained for each process.
+*so for 'n' number of proceses.there will be 'n' no. of page tables.
+*for large proceses ,there would be many pages and for maintainning information about these pages, there would be too many entries in their page tables which itself would occupy a lot of the memory.
+*hence memory utilization is not efficient as a lot of memory is wasted in maintainning page tables itself.
+solution to this problem: use inverted page tables.
+*an inverted page  table has one entry for each real page (or frame) of memory.
+*each entry consists of the virtual address of the page stored in that real memory location with information about the process that owns that page.
+*thus,only one page table is in the system,and it has only one entry for each page of physical memory.
 
- 
+the working:-*when a memory reference occurs, part of the virtual address ,consisting of <process-id,page no.> is presented to the memory subsystem.
+*the inverted page table is then seached for a match.
+*if a match is found-say at entry 'i' then the physical address <i,offset>is generated.
+*if no match is found,then a illegal address access has been attempted.
+
+advantage of inverted page tables:
+*reduces memory usage.
+disadvanage of inverted page tables:
+*increased seach time as inverted page table is sorted by physical address,but lookups occur on virtual addresses.the whole table might need to be serached for a match.
+*difficulty in implemnting shared memory
+
+############ segmentation   ###############
+* segmentation is another non-contiguous memory allocation techinque like paging.
+* unlike paging,in segmentation,the processes are not divided into fixed size pages.
+* instead ,the processes are divided into serveral modules called segaments which improves the visualization for the users.
+* so ,here both secondary memory and main memory are divided into partitions of unequal sizes.
+* user's view of program: digram showing seen or search it
+  
+################ segmentation hardware   ###############
+* although is segmentation the user can now refere to objects in the program by the two dimesional address, the actual physical memory is still, of course, one-dimensional sequence of bytes.
+* thus,we must define an implementation to map two-dimensional user-defined addresses into one-dimesional physical addresses.
+* this is done with the help of a segment table.
+  e.g digram seach it
+
+**main memory solved problem to do this**  
+######################## end the main memory ####################################
+
+##################### virtual memory ####################
+ so far we have discussed various memory-mangement strategies used in computer systems.
+ purpose?
+ keep many processes in memory simultaneously to allow multiporgramming 
+ However,
+ they ten to require that an entire process be in memory before it can execute, henece the procesess that can be loaded on to the main memory is often limited by the size of the main memory.
+ e.g if size of main memory=2MB
+  if size of process=3MB
+  it become difficult to accommodate such process in main memory.we can use mehtods such as dynamic loading which we have discussed earlier but if genrally require special precautions and extra work by the programmer.
+  ########## why virtual memory
+  virtual memory is a stroage scheme where secondary memory can be treated a though it is a part of main memory and large proceses can be stored in it.only the part of the process that is actually needed for execution will be loaded on to the actual main memory.
+  an examination of real program shows that:
+  *programs of ten have code to hadle unusual error conditions .since these errors seldom ,if ever occur in pratice this code is almost never executed.
+  *arrays, lists and tables are often allocated more memory than they actually need. an array may be declared 100 by 100 elements ,even though it is seldom larger than 10 by 10 elements.
+  *an assembleer symbol table may have room for 3000 symbols ,although the average program has less than 200 symbols.
+  
+  
 
 
      
