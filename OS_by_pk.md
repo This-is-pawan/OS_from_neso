@@ -2042,7 +2042,7 @@ when the process terminates,the partition becomes avaliable for naother process.
 ______________________________________________⬇️
 this is one of the simples mehtods for allocating memory.
 ⬇️
- search digram also  
+ search diagram also  
  
 ########### Dynamic storage allocation problem  ###########
 How to satisfy a request of size n from a list of free partitions/holes in main memory?
@@ -2241,13 +2241,13 @@ disadvanage of inverted page tables:
 * unlike paging,in segmentation,the processes are not divided into fixed size pages.
 * instead ,the processes are divided into serveral modules called segaments which improves the visualization for the users.
 * so ,here both secondary memory and main memory are divided into partitions of unequal sizes.
-* user's view of program: digram showing seen or search it
+* user's view of program: diagram showing seen or search it
   
 ################ segmentation hardware   ###############
 * although is segmentation the user can now refere to objects in the program by the two dimesional address, the actual physical memory is still, of course, one-dimensional sequence of bytes.
 * thus,we must define an implementation to map two-dimensional user-defined addresses into one-dimesional physical addresses.
 * this is done with the help of a segment table.
-  e.g digram seach it
+  e.g diagram seach it
 
 **main memory solved problem to do this**  
 ######################## end the main memory ####################################
@@ -2293,7 +2293,7 @@ disadvanage of inverted page tables:
  so,in connection with demand paging we will use the term pager
  A swapper manipulates entire processes,whereas a pager is concerned with the individual pages of a process.
 
-**digram see and search also
+**diagram see and search also
 
  ############ Hardware implementation of demand paging #########
  *in demand paging,pages are only loaded when they are demaned during program executtion,pages that are  never accessed are thus never loaded into physical memory.
@@ -2347,7 +2347,7 @@ while restarting we have to:
 6)when the disk read is complete,we modify the interanl table kept with the process and the page table to indicate that the page is now in meory.
 7)we restart the instruction that was interupted by the trap.
   the process can now access the page as through it had always been it memory.
-  digram always attach ok search
+  diagram always attach ok search
   
   ############## performace of demand paging ###########
   A computer system's performance can be significanlty affected by demand paging.
@@ -2398,7 +2398,7 @@ while restarting we have to:
   in chapter-4-threads ,we have seen how fork() system call creates a child process as a duplicate of its parent.
   fork() will create a copy of the parents's address space for the child ,duplicating the pages belonging to the parent.
   Instead of doing this we can optimize this method by making the parent and child processes to share the common pages and only creates a copy when one of the processes (either child or parent) wants to write (modify) a page.
-  digram search
+  diagram search
   only page tha tcan be modified need be marked as copy-on-write.
   pages that cannot be modified (pages containning executable code) can be shared by the parent and child.
 
@@ -2413,7 +2413,7 @@ e.g *suppose we have 40 frames in memory .
 * still we have 10 frames free.
   Now at some point let's say all the 6 processes wants to use all their 10 pages.
   so we need to load the remaining (6x5)=30 pages into memory,while we have only 10 free frames.
-  digram search
+  diagram search
   **what can the os do at this point?**
   1)it could terminate the user process.
   not the best choice os it destroys the purpose of demand paging.
@@ -2453,9 +2453,9 @@ but if there are not free frames available to load that page,what should we do t
   *Instead we can use FIFO queue that can hold all the pages that are in memory.
   *when replcaement has to be done,we choose the page at the head of the queue to be swapped out of memory.
   *when a new page is loaded into memory ,we add it at the tail of the queue.
-  digram:-
+  diagram:-
   ################# Belady's anomaly ##############
-  general expectation about the relation b/w no. of frame in memory and no. of page faults : with more no. of page frames there will be lesser page faults
+  General expectation about the relation b/w no. of frame in memory and no. of page faults : with more no. of page frames there will be lesser page faults
   *As the no. of frames increases, the no. of page faults drops to some minimal level.
   *Adding physical memory increase the no. of frames.
   with more no. of page frames there will be lesser page faults.
@@ -2468,12 +2468,153 @@ but if there are not free frames available to load that page,what should we do t
   for some page-replacement algorithms,the page-fault rate may increase as the no. of allocated frames increases.
   given below is the page-fault curve for FIFO replacement on a reference string that we discussed.
   
-  
-  
-  
+  ############### optimal page replacement  ################
+  An optional page-replacement algorithm has the lowest page-fault rate of all algorithms.
+   *it will never from belad's anomaly.
+   *it guarantees the lowest possible page fault rate for a fixed no. of frames.
+   
+  do this with diagram 
 
+  ############ Least rectently used (LRU) page replacement algo   ############
+  *it associates with each page the time of that page's last use.
+  *when a page must be replaced,LRU chooses the page that has not been used for the longest period of time.
+  * it is almost like the optimal page-replacement algorithm looking backward in time ,rather then forward.
+    12 page faults
+    do with diagram
+    the LRU page-replacement algo is generally considered a good algo and is used frequently.
+    problem:how to implement it?
+    ############# implementation of LRU page replacement       #########
+  * an LRU page-replacement algorithm may require substantial hardware assistance.
+  * The problem is-how to keep track of the pages that were least recently used?
+  * there are two ways we can implement this :
+    1)by using counters
+    2)by using a stack
+  
+  **counter implementation**
+  *with each page table entry ,we associate a time-of-use field and add a logical clock or counter to the CPU.
+  *the clock is increment for every memory reference.
+  *whenever a reference to a page is made,the contents of the clock register are copied to the time-of-use field in the page-table entry for that page.
+ *hence we always have the 'time' of the last reference to each page.
+ *we replace the page with the smallest time value.
 
+ ** stack implementation**
 
+ *maintain a stack of page no.
+ *whenever a page is referenced ,it is removed from the stack and put on the top.
+ *hence ,the most recently used page is always at the top of the stack and the least recently used page is always at the bottom.
+ *since entries must be removed from the middle of the stack, it is best to implement this approach by using a doubly linked list with a head and tail pointer.
+ reference string: 4707101212712  stack before a =>stack after b do with diagram.
+ 
+########### Additional-Reference-Bits algorithm     ####
+(LRU-approximation page replacement)
+*only a few computer systems provides the neccessary hardware support for LRU page replacement 
+*some system provide no hardware support at all and we end up using other algorithms like FIFO.
+*however ,many systems provide support for LRU in the form of a REFERENCE BIT.
+*the refernce bit (which is assocaited with each entry in the page table)
+for a page is set by the hardware whenever that page is referenced.
+stpes:initially the OS sets all the Reference bits for all the pages to '0'.
+*whenever a page is referenced,the hardware sets the reference bit to '1'.
+*by checking these referece bits we can tell which pages have been used and which haven't been used.
+*but,we cannot determine the order of use.
+used to get an idea of the ordering information of by recording the reference bits at regular intervals.
+How is it done?
+*we keep an 8-bit byte for each page in a table in memory.
+*At regular intervals (say,every 100 milliseconds) a timer interupt transfers control to the OS.
+*the OS shifts the reference bit for each page into the high-order bit of its 8-bit byte,shifting the other bits right by 1bit and discarding the low-order bit.
+*these 8-bit shift registers contain the history of page use for the last eight time periods.
+e.g page no.  |      shift register content   | what it means 
+p1                000000000                the page has not been used for eight time periods            
+p2                11111111              the page has been used at least once in each periods            
+p2                110000100                the page has not been used more recently than p4            
+p3               01110111              the page has been used less recently than p3          
+
+######### second-chance algorithm #######
+*it is basically a FIFO replacement alogrithm but with an additional feature.
+*when a page has been  selected ,we check its reference bit.
+*if reference bit =0 ->we replace the page.
+*if reference bit=1->we give a second chance to that page and move on to the next.
+*when a page gets a second change,its reference bit is reset to '0' and its arrival time is reset tothe current time.
+*so ,if a page is given a second chance,it is not replaced until all other pages are either replaced or given their own second chances.
+*also ,if a page is frequently used,its reference bit will mostly be set(1) and hence,it will never be replaced.
+the second-chance algrorithms also called 'clock algorithm' is usually implemented as a circular queue.
+reference bits      page          reference bits   pages  (diagram )
+
+**enhanced second-chance algorithm**(LRU-approximation page replacement)
+*this is an enchancement of the second-chance algrithm.
+*here we consider the reference bit and the modifiy bit as an ordered pair.
+*the reference bit is set when a page has been referenced.
+the modify bit is set when a page has been modified.
+Hence,we can have four possible cases
+chart
+      reference bit | modify bit| what is implies |remarks
+(00)     0                     0     ......        .......  
+(0,1)    0                     1     ......        .......
+(1,0)    1                     0
+(1,1)    1                     1
+
+########### counting-based page replacement   #########
+miantain a counter that keeps a count of the no. of references mode to each page.
+using the counter we formulate the following schemes: 
+*least frequently used (LFU) page-replacement algorithm
+*most frequently used (MFU) page-replacement algorithm
+
+**LFU page-replacement algorithm**
+counter-keeps a count of the no. of reference made to each page.
+*pages which are least used-will have lesser counts.
+*pages which are frequently used-will have greater countes.
+repalce the page with the least count.
+*problem-pages that were heavily used during the initial phase of processes would have higher counts and would remain in memory though they may not be needed further.
+solution-shift the counts right by 1 bit at regular intervals,forming an exponentially decaying average usage count.
+
+**MFU page-replacement algorithm**
+counter-keeps a count of the no. of reference made to each page.
+*pages which are least used-will have lesser counts.
+*pages which are frequently used-will have greater countes.
+repalce the page with the least count.
+based on the argument that the page with the smallest count was probably just brought in and is yet to be used.
+do not replace the page with the least count.
+
+Both LFU and MFU algorithms are 
+*expensive to implement and they also
+*do not approximate optimum page replacement well.
+
+Hence they are not usually used.
+####### page-buffering algorithms   ######
+when a page fault occurs:
+*A victim frame is chosen.
+*the desired page is loaded into a frame from the free frames pool.
+*this happens before the victim page is swapped out.
+*once the victim page is swapped out & written to the disk,the victim frame wil be added to the free frames pool.
+this allows the process to restart as soon as possible,without waiting for the victim apge to be written out.
+(diagram)
+** An expansion of the idea **
+maintain a pool of modified pages.
+whenever the paging device is idle:
+*a modified is selected and is written to the disk.
+*its modify bit is then reset.
+why is this done?
+this increase the probability that a page will be clean when it is selected for replacement and will not need to be written back to the disk again.
+########## allocation of frames ########
+how do we allocate to various processes the fixed amount of free memory that is available? e.g in a single user system:
+*consider memory size=128KB.
+*page size=1KB
+*so,no of frames=128.
+*suppose OS uses 30KB.
+*frames remaining for user processes=128-30=98.
+*these 98 frames would be available in the free frames first.
+if demand paging is used:
+*The first 98 page faults would get all free  frames from the list.
+*when the free frames are exhausted ,a page replacement algorithm would be used to replace a page from the occupied list of 98 with 99th page.
+**Minimum no. of framse**
+constraints for allocation of frames 
+*unless there is page sharing ,we cannot allocate more than total no. of avaliable frames
+*A minimum no. of frames should be allocated to each process.
+⬇️ performance                 there should be enough frames to                                     hold 
+                             all the different pages that any                                     single 
+                            instruction can reference 
+############ allocation algorithms    ############
+
+ 
 
 
 
