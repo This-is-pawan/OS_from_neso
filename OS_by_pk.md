@@ -2612,9 +2612,68 @@ constraints for allocation of frames
 ⬇️ performance                 there should be enough frames to                                     hold 
                              all the different pages that any                                     single 
                             instruction can reference 
+                            
 ############ allocation algorithms    ############
+frame allocation algorithms would help us in determining how many frames should be allocated to different processes in a multi processing environment 
+we will discuss the 3 most common allocation algorihms:
+1)equal allcation
+2)proportional allocation
+3)priority allocation
+**equal allocation**
+the frames are equally distributed among the processes.
+*if we have m no. of frames
+*if we have n no. of processes
+*we allocate m/n frames to each process.
+e.g and numerical 
 
- 
+############# global versus local allocation ##############
+page-replacement algo can be classified into two broad categroies:
+1)Global replacement
+2)Local replacement
+this is another important factor in deciding the way frames are allocated to different processes.
+in global replcement: when a page fault occurs:*processes are allowed to select replacement frames from the set of all frames even if the frames are allocated to some other processes.
+e.g do yourself.
+in local replacement:when a page fault occours:*processes are allowed to select replacement frames only from the set of frames that is particularly allocated to them.
+e.g do yourself
+
+
+######## Thrashing   ########
+consider a process that doesn't have enough frames for its execution.
+it will quickly cause a page fault ->page replacement ->replace a page with the new desired page -> the page that was replaced was an actively used page.so it would also cause a fault .
+
+replace a page with the desired page
+
+the page that was replaced was an actively used page ,so it would also cause a fault
+**servere performance problems due to thrashing**
+the os monitors cpu utilization .if cpu utilization is too low,we increase the degree of multiprogramming by introducing a new process to the system.
+*as processess are busy swapping pages in an out ,they queue up for the pageing device and the ready queue become empty.
+*since processes are now waiting for the paging device,the cpu utilization decreases.
+*the cpu scheduler sees that the cpu ulitization has deceased and in an attempt to increase cpu utilization it increase the degree of mutiprogramming by bringing in new processes.
+*these new processes tries to take frames from the older processes hence increasing the no. of page faults and increasing the queue for the paging device.
+*the cpu utilization drops even further and the cycle continues.
+*here we see thrashing occuring and the system throughput decreasing tremendously.
+
+####### working-set model    #####
+how to prevent thrashing?
+we must provide a process with as many frames as it needs.
+but how do we know how many frames it needs?we make of the working set strategy where it checks how many frames a process is actually using .
+this approach defines the locality model of process execution.
+as a proces executes,it moves from locality to locality.
+a set of pages that are actively used together .
+a program is generally composed of serveral different localities,which may overlap.
+**implementation**
+we use a parameter which defines the working set window.
+*the set of pages in the most recent page reference is the working set.
+*if a page is in active use,it will be in the working set.
+*if it is no longer being used,it will drop from the working set time units after its last reference .
+*thus,the working set is an approximation of the program's locality.
+page reference table (do make it)
+
+virtual problem - do this also
+###################### end virtual memory ##################
+############## file system (storage managment)  ################
+programs has to be loaded to main memory for execution
+but main memory is usually  too small to accommodate all the data and programs permanently .so,the computer system must provide secondary storage to back up main memory.
 
 
 
