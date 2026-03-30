@@ -2350,6 +2350,102 @@ while restarting we have to:
   digram always attach ok search
   
   ############## performace of demand paging ###########
+  A computer system's performance can be significanlty affected by demand paging.
+  let use see how,by taking a look at the effective access time.
+  the memory access time (ma) for most systems usually ranges from 10 to 200 nanoseconds
+  if there are no page faults ,the effective access time will be equal to the  memmory access time
+  but what if a page faults occurs?
+  let P be probability of a page fault( <0_p<_1)
+  effective access time =(1-p) x ma + p x page fault time
+  time spent for normal memory access     time spent for handling page fault
+
+  The sequence that occurs when a page fault happens:
+  1)trap to the os system.
+  2) save the user registers and process state.
+  3)determine that the interrupt was a page fault.
+  4)check that the page reference was legal and determine the location of the page on the disk.
+  5) isssue a read from the disk to a free frame:-
+  a)wait in a quenue for this device until the read request is serviced.
+  b)wait for the device seek adn /or latency time.
+  c)begin the transfer of the page to a free frame.
+  6)while waiting ,allocate the CPU to some otehr user (CPU scheduling ,optional)
+  7)receive an interupt from the disk I/O subsystem (I/O compeleted).
+  8)save the regisers and process state for the other user (if step 6 is executed).
+  9)determine that the interupt was from the disk.
+  10)correct the page table and other tables to show that the desired page is now in memory.
+  11)wait for the CPU to be allocated to this process again.
+  12)restore the user registers ,process state,and new page table,and then resume the interrupted instruction.
+  Not all the steps in the previous slide are necessary in every case.
+  but in all cases we will face three major components of the page fault service time:
+  1)service the page-fault interrupt.
+  2)read in the page.
+  3)restart the process.
+  can take close to 8 milliseconds                  make take 1 to 100 microsecons each
+  so we can consider an average page fault handling time of 8 milliseconds and A memory access time  of 200 nanoseconds
+  Effective access time =(1-p)x ma + p x page fault time
+  time spent for normal memory access         time spent for handling page fault
+  effective access time =(1-p) x ma + p x page fault time
+                        = (1-p) x (200)+ p x ( 8 milliseconds)
+                       = (1-p) X (200) + p x 8000000
+                     =200-200p + 8000000p
+                     =200 + 7999800p
+  The effective access time is directly proportional to the page-fault rate.
+  if one accesss out of 1000 causes a page fault,then.
+  effective access time =200+(7999800x1/1000)=>8199.8=8.2 microseconds
+               ########### Copy on write ##########
+  copy on write (CoW) is a technique that is used for sharing virtual memory or pages.
+  it is mostly used in conjuction with the fork() system call that is used for creating child processes.
+  in chapter-4-threads ,we have seen how fork() system call creates a child process as a duplicate of its parent.
+  fork() will create a copy of the parents's address space for the child ,duplicating the pages belonging to the parent.
+  Instead of doing this we can optimize this method by making the parent and child processes to share the common pages and only creates a copy when one of the processes (either child or parent) wants to write (modify) a page.
+  digram search
+  only page tha tcan be modified need be marked as copy-on-write.
+  pages that cannot be modified (pages containning executable code) can be shared by the parent and child.
+
+  ############# problems of demand paging  ########
+ with the help of demand paging,we are increasing our degree of multi-programming by loading only the required pages into memory hence facilitatinog the possibility of having more processes loaded into memory.
+this could lead to over-allocation of memory.
+e.g *suppose we have 40 frames in memory .
+*we have 6 processes each of which has 10 pages but uses  only 5 at the moment.
+* we have 6 processes each of which has 10 pages but uses only 5 at the moment.
+* we can load these(6x5)=30 pages into the memory
+* so allthe processes are executing simultaneously.
+* still we have 10 frames free.
+  Now at some point let's say all the 6 processes wants to use all their 10 pages.
+  so we need to load the remaining (6x5)=30 pages into memory,while we have only 10 free frames.
+  digram search
+  **what can the os do at this point?**
+  1)it could terminate the user process.
+  not the best choice os it destroys the purpose of demand paging.
+  2)the os could instead swap out a process freeing all its frames and reducing the level of multiprogramming.
+  A good option in certain circumstances.
+  3) we can make use of PAGE REPLACEMENT technique.
+  the most common soultion.
+  ############ page replacement ########
+ page replacement is the technique of swapping out pages from physical memory when there are no more free frames avaliable, in order to make room for other pages which has to be loaded to the physical memory.
+if a process wants to use/acceess a page  which is not present in physical memory, if will cause a page fault.so,that page has to be now loaded into memory.
+but if there are not free frames available to load that page,what should we do then?
+*we look for an occupied frame that is not being used currently.
+*we free that frame by writing its contents to the swap space.
+*we update the page tables(and other tables) to indicate that the page is now no more in memory.
+*we load the page of the process that caused the page fault to occur into the freed frame.
+
+ **Steps**
+ 1)find the location of the page to be loaded on the disk.
+ 2)if there a free frame,use that frame and load the page into that frame.
+ 3)if there are no free frames ,use a page-replacement algorithm to select a victim frame.
+ 4)write the victim frame to the disk and change the page and frame tables accordingly.
+ 5)read the desired page into the newly freed frame and change the page and frame tables.
+ 6)restart the user process.
+  **page-fault service time when no frames are free**
+  1)If no frames are free,two page transfers (one out and one in) are required.
+  2)this doubles the page-fault service time and increament the effective access time accrodingly.
+  How can we reduce this?
+  we can make user of the Modify (dirty) bit.
+  the modify bit  is set when a page has been modified. so,when page replacement has to be done on a page which is present in memory.
+  if modify bit is set-that means the page has been modified and we need to write that to the disk.
+  if the modify bit is not set - that mean the page has not been modified and it is the same as the copy which is already present in the disk .in this ,we don't have to overwrite this page on the disk,thus reducing the overhead and the effective access time accordingly.
+  ################## FIFO page replacement  ################
   
 
 
