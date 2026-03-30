@@ -2446,6 +2446,30 @@ but if there are not free frames available to load that page,what should we do t
   if modify bit is set-that means the page has been modified and we need to write that to the disk.
   if the modify bit is not set - that mean the page has not been modified and it is the same as the copy which is already present in the disk .in this ,we don't have to overwrite this page on the disk,thus reducing the overhead and the effective access time accordingly.
   ################## FIFO page replacement  ################
+  This first-in,first-out(FIFO) algorithm is the simplest page replacement algorithm.
+  when page replacement has to be done,the lodest page in memory is chosen to be swapped out .
+  How to maintain a record of the time that pages were brought into memory in order to figure out which is the oldest page?
+  *we don't have to strictly record the times.
+  *Instead we can use FIFO queue that can hold all the pages that are in memory.
+  *when replcaement has to be done,we choose the page at the head of the queue to be swapped out of memory.
+  *when a new page is loaded into memory ,we add it at the tail of the queue.
+  digram:-
+  ################# Belady's anomaly ##############
+  general expectation about the relation b/w no. of frame in memory and no. of page faults : with more no. of page frames there will be lesser page faults
+  *As the no. of frames increases, the no. of page faults drops to some minimal level.
+  *Adding physical memory increase the no. of frames.
+  with more no. of page frames there will be lesser page faults.
+  *as the no. of frames increases,the no. of page faults drops to some minimal level 
+  *adding physical memory increases the no. of frames.
+  consider the reference string.
+  1,2,3,4,1,2,5,1,2,3,4,5 where each value respents a page 
+  let's say we have 3 frames in memory 
+  let's use FIFO replacement and find the no. of page faults that would occur in this case.
+  for some page-replacement algorithms,the page-fault rate may increase as the no. of allocated frames increases.
+  given below is the page-fault curve for FIFO replacement on a reference string that we discussed.
+  
+  
+  
   
 
 
