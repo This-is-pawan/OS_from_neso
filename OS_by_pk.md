@@ -2267,22 +2267,90 @@ disadvanage of inverted page tables:
   *programs of ten have code to hadle unusual error conditions .since these errors seldom ,if ever occur in pratice this code is almost never executed.
   *arrays, lists and tables are often allocated more memory than they actually need. an array may be declared 100 by 100 elements ,even though it is seldom larger than 10 by 10 elements.
   *an assembleer symbol table may have room for 3000 symbols ,although the average program has less than 200 symbols.
+  **Benefits of being able to execute a program that is only partialy in memory**
+  *A program would no  longer be constrained by the amount of physical memory that is available,users would be able to write program for an extremely large virtual address space,simplifying th programming task.
+  *because each user program could take less physical memory,more programs could be run at the same time,with a corresponding increase in CPU utilization and throughput but with no increase in response time or turnaround time.
+  *Less I/O would be needed to load or swap each user program into memory,so each user program would run faster.
+  Running a program that is not entiely in memory would benefit both the system and the user.
+  **virtual memory involves the separation of logical memory as perceiveld by users from physical memory.
+  **this separation,allows an extremely large virtual memory to be provided for programmers when only a smaller physical memory is available.
   
+
+
+  ################## Demand paging  ################
   
+  How can an executable program be loaded from disk to memory?
+  *Approach-1:load the entire program in physical memory at program execution time.
+  problem:we may not initially need the entrie program in memory.consider a program that starts with a list of avaiable options from which the user is to select ,loading the entire program into memory results in loading the executable code for all options, regardless of whether an option is ultimaltely selected by the user or not.
+  *Approch-2:load pages only as they are needed.pages are only loaded when they are demanded during program execution .pages that are never accessed are thus never loaded into physical memory 
+         -This is called demand paging.
+  more about demand paging........⬇️  
+  *A deman-paging system is similar to a paging system with swapping where processes reside in secondary memory(usually a disk).
+  *when we want to execute a process,we swap it into memory.
+  *rather than swapping the entire process into memory,however we use a lazy swapper. 
+  A lazy swapper never swaps never swaps a page into memory unless that page will be needed.
+ since we are viewing a process as a sequence of pages ,rather than as one large contiguous address space use of the term swapper is technically incorrect.
+ so,in connection with demand paging we will use the term pager
+ A swapper manipulates entire processes,whereas a pager is concerned with the individual pages of a process.
 
+**digram see and search also
 
-     
+ ############ Hardware implementation of demand paging #########
+ *in demand paging,pages are only loaded when they are demaned during program executtion,pages that are  never accessed are thus never loaded into physical memory.
+ *the pager takes care of swapping pages in and out of the memory.
+ How can the hardware implementation be done to distinguish b/w pages that are in memory and the pages that are on the disk? 
 
-
-
- 
- 
-
-
+We can make use of the present/absent bit or valid/invalid bit which was discussed in chapter-8 main memory (refer the leture titled 'page table entries').
+if the bit is set to VALID-the page is both legal and in memory.
+if the bit is set to 'INVALID'-The page is either not in the logical address space of the process or is valid but is currently on the disk.
+**Page table entries**
+page tables entries for page that are brought to memory 
+-will be set as usual
+page table entries fo rpages that are not currently in memory -will be either marked as invalid or contains the addresses of the page on disk (secondary memory) 
+0 -A        frame valid/invalid-bit    physical memory   disk
+1 -B         0  3-V                    0               box-like
+2 -C         1    i                    1
+3 -D         2  7-V (page table)       2-A
+4 -E         3  11-V                   3
+5 -F
+6 -G(logical memory)
                                                    
-      
+ ########### page fault ##########
+ what would happen if a process tries to access a page that is not present in memory (or marked as invalid)?
+ This scenario is known as a page fault
+ access to a page marked invalid causes a page-fault trap.
+ The paging hardware in translating the address through the page table,will notice that the invalid bit is set,cousing a trap to the operating system.
+ A page fault may occur at any memory references.
+ * if the page fault occurs on the instruction fetch ,we can restart by fetching the instruction again.
+ * if a page fault occurs while we are fetching on operand,we must fetch and decode the instruction again and then fetch the operand.
+consider a three-address instruction for ADDING the contenst of A to B and placing the result in C:
+1)fetch and decode the instruction (ADD)
+2)fetch A.
+3)fetch B.
+4)Add A and B.
+5)Store the sum in C.
+Assume that C is a page which is not yet present in memory.
+then a page fault will occur when trying to store the sum in C.
+so , In this case,we have to get hte desired page,bring it into memory,correct the page table and restart the instruction
+while restarting we have to:
+*fetch the instruction again
+*decode it again.
+*fetch the 2 operands A and B again#
+*perform the addition again and
+* store the sum in C
+  **Produre for handling page faults**
+  1)we check an internal table (usually kept with the PCB) for this process to determine whether the reference was a valid or an invalid memory access.
+2)if the reference was invalid,we terminate the process.
+3)if it was valid ,but we have not yet brought in that page,we now page it in.
+4)we find a free (by taking one from the free-frame list)
+5) we schedule a disk operation to read the desired page into the newly allocated frame.
+6)when the disk read is complete,we modify the interanl table kept with the process and the page table to indicate that the page is now in meory.
+7)we restart the instruction that was interupted by the trap.
+  the process can now access the page as through it had always been it memory.
+  digram always attach ok search
   
-
+  ############## performace of demand paging ###########
+  
 
 
 
