@@ -2733,7 +2733,57 @@ e.g myfiles.c
 8) Last modified date - The data on which the file was last nodified.
 9) owner - The information about who is the owner of the file.
     they attributes of the file are stored in the file control block(FCB)
-   
+  ########## Writing a file  ##########
+**steps for writting a file**
+1)make  a system call specifying both the name of the file and the information to be written to the file.
+2)with the given name of the file ,the system searches for the file in the directory and locates it.
+3)A write pointer is maintained which points to the location in the file from where the next must take place.
+4)After the writing is done, the write pointer is updated.
+**steps for reading a file**
+1)make  a system call specifying both the name of the file and where (in memory) the next block of the file should be real.
+2)With the given name of the file,the system searches for the file in the file in the directory and locates it.
+3)A real pointer is maintained which points to the location in the file form where the next read must take place.
+4)After the reading is done, the read pointer is updated.
+
+**steps for repositioning within a file**
+1)The directory is searched for the oppropriate file.
+2)The current-file-position pointer is repositioned to a given value.
+Repositioning within a file need not involve any actual I/O
+
+**steps for deleting a file**
+1)The directory is searched for the named file.
+2)Once the directory is found,all the file space occupied by the file is released so that it can be used by other files.
+**Truncating a file**
+The user  want to erase the contents of a file but keep its attributes.rather than forcing the user to delete the file and then recreate it,this function allows all attributes to remain unchanged.
+steps for truncating a file: 
+1)keep all the attributes of the file unchanged.
+2)execpt-The file length,reset it to zero.
+3)release the file  space.
+common file operations :
+*creating a file
+*writing a file
+*reading a file
+*repositionning within a file.
+*deleting a file.
+*truncating a file
+other file operations
+*appending new information to the end of an existing file.
+*renaming an existing file.
+*saving a file
+*editing existing data on a file
+*creating a copy of a file
+*hiding a file
+*spending a file
+*printing a file
+etc.
+**the open() system call**
+Most of the common file opertions that we discussed involve searching the directory for the entry associated with the named file.
+To avoid this constant searching ,many systems require that an open() system call be made before a file is file used actively.
+*the os keeps a small table, called the open-file table,containing information about all open files.
+*when a file operation is requested,the file is specified via an index into this table,so no searching is required.
+*when the file is no longer being actively used ,it is closed by the processes,and the operating systems removes its entry from the open-file table.
+
+
 
 
 
