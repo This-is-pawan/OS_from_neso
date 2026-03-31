@@ -2674,7 +2674,72 @@ virtual problem - do this also
 ############## file system (storage managment)  ################
 programs has to be loaded to main memory for execution
 but main memory is usually  too small to accommodate all the data and programs permanently .so,the computer system must provide secondary storage to back up main memory.
+Most computers use disk as the most common secondary storage device for both programs and data.
+The file system provides the mechanism for:
+*storage of data and programs on the disk.
+*access to data and programs on the disk.
+FIles are mapped by OS to physical devices.
+A collection of related information defined by its creator.
+files are normally organized into directions for ease of use.
+Different  storage device vary in many aspects.e.g
+*Some devices transfer a character or a block of characters at a time.
+*some can be accessed only sequentially .
+*some can be accessed randomly.
+*some transfer data synchronously.
+*some transfer data synchronously.
+*some are dedicated while some are shared.
+*some can be read-only.
+*some can be read-write.
+Because of all this device variation,the operating system needs to provide a wide range of functionally to applications,to applications,to allow them to control all aspects of the devices.
+Objectives:
+*understand the functions of file system.
+*understand the interfaces to file systems.
+*understand file system designs,access methods and directory structures.
+######## concept of file ######
+different storage media can be used for storing information in a computer.
+e.g magnetic disks, magnetic tapes and optical disks,etc.
+The OS abstracts from the physical properties of its storage devices to define a logical storage unit- THE FILE
+files are mapped by the os onto physical devices.
+usually non-volatile.
+contents are not lost after power is OFF.
+Definition:A file a named collection of related information that is recorded on secondary storage.
+from a user's perspective.
+*A file is the smallest allotment of logical secondary storage.
+*Data cannot be written to secondary storage unless they are within a file.
+Files respresent both data and programs
+can be numeric,alphaetic,alphanumeric ,or binary
+may be free form ,such as text files,or may be formatted rigidly.
+in general ,a file is a sequence of bits,bytes,lines or records ,the meaning of which is defined by the files's creator and user.
+
+The information in a file is defined by its creator.
+Many different types of information may be stored in a file.
+e.g source program, object programs ,executable programs
+numeric data , text,graphic images ,sound recordings ,video recordings.
+
+######### file attributes ######
+naming a file:
+*A file is named for the convenience of its human users,and is referred to by its name.
+*A name is usually a string of characters.
+e.g myfiles.c
+* when a file is named ,it becomes independent of the process,the user ,and even the system that creadted it.
+**A file's attributes vary from one OS to another but typically consist of these:**
+1) Name-The symbolic file name is th only information kept in human readable form.
+2) Identifier - This unique tag, usually a no. identifies the file within the file system :it is the non-human-readable name for the file
+3) Type - this information is needed for systems that support different types of files.
+4) Location - This information is a pointer to a device and to the location of the file on that device.
+5) Size-The current size of the file (in bytes,words,or blocks) and possibly the maximum allowed size are included in this attribute.
+6) protection/permission- Access-control information determines who can do reading ,writing,executing ,and so on.
+7) creation date - The data on which the file was created.
+8) Last modified date - The data on which the file was last nodified.
+9) owner - The information about who is the owner of the file.
+    they attributes of the file are stored in the file control block(FCB)
+   
 
 
 
 
+
+
+
+
+ 
