@@ -2782,7 +2782,117 @@ To avoid this constant searching ,many systems require that an open() system cal
 *the os keeps a small table, called the open-file table,containing information about all open files.
 *when a file operation is requested,the file is specified via an index into this table,so no searching is required.
 *when the file is no longer being actively used ,it is closed by the processes,and the operating systems removes its entry from the open-file table.
+#############   file types   ############
+when a file system or an OS is designed ,the file types that the OS should recognize and support must be considered.
+if an OS recoginzes the type of a file ,it can then operate on the file in reasonable ways.
+The common technique for implementing file types is to include the type as part of the file name.
+ myfile.txt
+ name    period separator    extension
+ **common file types**
+ file type           usual extension            function
+ executable          exe,com,bin or none   ready-to-run-machine-language program
+ object             obj,o     compiled machine language ,not linked
+ source code    c,cpp,pas,java,asm,pv   commands to the command interperter
+ Batch      bat,sh  commands to the command interperter
+ text     txt,doc    textual data,doucments
+ word processor    wp,doc,rtf      various word processor formats
+ libara       lib,a       libaries of routines for programmmers
+ print a view     ps,pdf,jpg    ASCII or binary file in a formate for printing or viewing
+ Archive    arc,zip ,tar     related files grouped into one file sometimes compressed for archiving or storage 
+ Mutimedia  mp3,mp4,avi      binary file containning audio or A/V information
+ **other ways of identifying file types**
+ In Mac OS X:
+ each file has a 'type' specified with it to identify its type.
+ e.g for text file the type is -TEXT
+ for application ,the type is-APPL
+ in UNIX systems
+ it uses a crude magic no. stored at the beginning of same files to indicate roughly the type of the file.
 
+ ######## Sequential Access ####
+ *This is the simplest access method.
+ *information in the file is processed in order ,one record after the other.
+ *Most common editors,compilers,etc,access files in this method.
+ beginning         current position      end
+ READ OPERATION     read next          reads the next partion of the 
+                                     file and automatically advance
+                                     a file pointer,which tracks the                                      I/O location.   
+WRITE OPERATION    write next      appends to the end of the file and advance to the end of the newly written material (the new end of file)     
+**Direct Access (Relative Access)**
+*A file is made up of fixed length logical records that allow programs to read and write records rapidly in no particular order.
+*In direct access -the file is viewed as a numbered sequence of blocks or records.
+*Hence,there are no restrictions on the order of reading or writing for a direct-access file.
+*direct-access files are of great use for immediate access to large amounts of information.
+*e.g databases.
+READ OPERATION -read n- reads from block no. 'n' from the file.
+WRITE OPERATION -write n- writes to block no. 'n' of the file.
+the block no. provided by the user to the os is normally a realtive block no. which is an index to the relative begginning of the file.
+
+############## Directory struture  ##########   
+the file system of computers can be extensive.systems need to store huge no. of files on disks.
+so,to manage this huge amount of data ,they must be organized properly.
+Directories are used for organizing this data.
+** storage structure **
+*A disk or any large storage device can be used entirely for a file system.
+*But it is better to have mutiple file system on a disk or use parts of a disk for a file system and other parts for other things like swap space,raw disk space ,etc.
+These parts are called-  PARITIONS,SLICES MINIDISK
+a file system can be created on each of these parts of the disk.
+These parts can also be further combined to form larger structure called VOLUMES a file system can be created on these as well.
+*each volume can be thought of as a virtual disk.
+*volumes can store multiple OS allowing the system to boot and run more than one OS.
+*each volume that contains a file system must also contain information about the files in the system.
+this information is kept in entries in a device directory.
+A directory records information such as - name 
+                                        -location for all files on that volume.
+                                        -size
+                                        -type
+
+            **A typical file-system organization**
+
+partition A   directory 
+                files      -disk   partion-c directiory   - disk 2
+                diagram
+ **directory overview**
+ Operations that can be performed on a directory:
+ *seach for a file
+ *create a file
+ *delete a fiel
+ *list a directory 
+ *rename a file
+ *traverse the file system
+ 
+ ########## single-level directory ###########
+single-level directory is the simplest directory structure here,all files are contained in the same directory.
+directory cat | bo | a | test | data | mail | cont | hex | records
+files     -     -   -   -       -     -      -       -    -
+advantages:
+*implementations is easy as there is just a single directory.
+*file os like creating,reading ,deleting,repositioning,renaming ,etc,are easily done.
+*searching for file will be fast if the number of files are less and are of small sizes.
+Limitations:
+*problems start arising when the no. of files increase or when the system has more than one user.
+*All the files must have unique names since all the files are in the same directory.
+e.g if two users name their files 'test'  then the unique-name rule is violated.
+*As the no. of files increase:
+-even a single user will find it difficult to remember all the names of the files.
+-searching for a file will become difficult.
+-keeping track of all the files will be a very difficult task.
+
+                
+
+                
+                
+                                        
+
+                                    
+                                                                       
+
+                                 
+
+
+
+                                     
+ 
+ 
 
 
 
