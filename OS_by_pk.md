@@ -2967,7 +2967,20 @@ steps:
 1) traverse the entire file system and mark everything that can be accessed.
 2) traverse again a second time and free up all the unmarked cases from the first step.
    Garbage collection for a disk-based file system,however,is extremel time consuming and is thus seldom attempted.
-   
+
+   ############ File system mounting ##########
+   just as a file must be opened before it is used,a file system must mounted before it can be avaiable to processes on the system.
+   A directory structure can be built out of multiple volumes as we have discussed earlier.These must be mounted to make them available within the file-system name space.
+   mounting is a process by which the os makes the files and directories an a storage device available for users to access within the file system.
+############# mounting procedure #########
+*The operating system is given the name of the device and the mount point.
+*the location within the file structure where the file system is to be attached.
+*e.g in UNIX system:
+A file system containing a user's home directories might be mounted as /home to access the directory structure within that file system-home/john if it was mounted at /users
+Then the path would be /users/john
+*The operating system verifies that the device contains a valid file system.
+*The operating system notes in its directory structure that a file system in mounted at the specified mount point.
+( existing system and unmounted volume  )
    
 
 
