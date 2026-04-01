@@ -3145,6 +3145,48 @@ systems mostly recognize three classifications of users in connection with each 
 *universe - all other users in the sytem constitue the universe.
 unix and window e.g search also
  
+    ############### end file system ###################
+############################# ##############################
+   ########## file-system-implementation ########
+   the file system resides permanently on secondary storage ,which is designed to hold a large amount of data permanently.
+   here,we will study about how the file systems are implemented.
+   different os support different file system :UNIX -unix file system
+   window -fat,fat32 ,ntfs
+   several on-disk and in-memory structure are used to implement a file system.
+   **boot control block**
+there is a boot control block for each volume.
+*it is typically the first block of a volume.
+*it contains information needed by the system to boot an operating system from that volume.
+*if the disk does not contain an os , this block can be empty.
+in unix file system it is called the boot block.
+in Ntfs is called the partition boot sector.
+**volume control block**
+there is a volume control block or each volume.
+it contains volume or partition details such as:
+* the no. of blocks in the partition.
+* size of the blocks
+* free block count
+* free block pointers
+* free fcb (file control block) count and fcs pointers
+  in unix file system it is called a superblock.
+  in ntfs it is stored in the master file table.
+
+  **Directory structure per file system**
+   this is used to organize the files.
+  in unix file system it is includes file name and associated inode no. in ntfs is stored in the master file table.
+
+  **per-file FCB**
+  it contains many details about the file such as:
+  *file permissions       
+  *ownership
+  *size
+  *location of the data blocks
+  in unix file system it is called the inode.
+  in ntfs it is stored in the master file table.
+  
+  
+  
+   
 
  
 
