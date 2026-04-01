@@ -2944,8 +2944,34 @@ A file may now have multiple absoulte path names. also different file names may 
 *Deleting of shared files:
 -if the file is deleted whenever someone deletes it ,it will lead to dangling pointers to the no-existent file.
 -if shared files are implemented using symblic links,then deletion of a file by one user will delete only the link and won't affect the original file.but if the original file is deleted ,it will leave the links dangling .later,these linkes can be removed.
+######## General graph directory #######
+problem with acyclic-graph directiories-It has to be ensured that there are no cycle.
+Advantage of this-It is relatively simple to traverse the graph.
+*if we start with a two-level directory and allow users to create subdirectories a tree-structured directory results.
+*if we continue adding files and subdirectiories in this way,the tree sturcture is preserved and continues.
+*But when we add links to an existing tree-structured directory,the tree structure is destroyed,resulting in a simple graph structure(which may or may not contain cycles.)
+
+**problems to be considered in general graph directory structures**
+searching for files
+*if cycles are allowed to exist in the directory,we want to avoid searching any component twice, for reasons of correctness as well as performance.
+*A poorly designed algorithm might result in an infinite loop continually searching thorugh the cyle and never terminating.
+*one solution is to limit arbitrarily the no. of directories that will be accessed during a search.
+**Deleting files**
+*In an acyclic-graph directory structure,if the reference count is 0 for any file ,then that means there are no references to that file or directory and it can be safely deleted.
+*but when cycles exist,the reference count may not be 0 evern when it is not longer possible to refer to a directory or file because of the possibilty of self-referencing (cycle).
+*To avoid this we can use the scheme of Garbage collection.
+
+**Garbage collection**
+it is a scheme to determine when the last referece has been deleted and the disk space can be reallocated.
+steps:
+1) traverse the entire file system and mark everything that can be accessed.
+2) traverse again a second time and free up all the unmarked cases from the first step.
+   Garbage collection for a disk-based file system,however,is extremel time consuming and is thus seldom attempted.
+   
+   
 
 
+ 
 
 
    
