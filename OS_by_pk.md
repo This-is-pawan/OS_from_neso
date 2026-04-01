@@ -2877,7 +2877,82 @@ e.g if two users name their files 'test'  then the unique-name rule is violated.
 -searching for a file will become difficult.
 -keeping track of all the files will be a very difficult task.
 
-                
+############# Two-level directory  ##########
+Here,each user has his/her own directory called the user file directory (MFD)
+Information about each UFD is stored in a system directory called the master file directory (MFD)
+The MFD is indexed by user name or account no. and each entry points to the UFD for that user.
+User file directory(UFD)   user1,user2,user3,user4  master file diectory(MFD)
+cat|bo|a|test    a|data   a|test    x|data|a
+
+-  -  - -       - -       -  -      -  -  -  
+files 
+when a user refers to a  particular file,only his own UFD is searched.Thus,different users may hav files with the same name,as long as all the file names within each UFD are unique.
+problems:*users are isloated from each other .
+*when two or more users wants to cooperate on a task and access the same file,it become difficult as the system doesn't permit this.
+*** if users are allowed to access other user's files,then the files must be named with their complete path which specifies who is the owner of the file.
+e.g /user1/test
+   /user3/test
+   /user4/data
+   Every system has it own syntax for naming files and directories.
+   e.g in MS-DOS     c:\user1\test
+   volume name           username           directory name
+   Another problem:
+   *There are system files that has to be used by several users.
+   *when these iles are to be accesed by some user,it will be searched for in that user's UFD .But it won't be available there.
+   solution to the problem:
+   *copy the sytem files to each UFD.- This would waste an enormous amont of space.
+   *A special user directory is defined to contain the system files(e.g user 0) -  whenever a file name is given to be loaded,the os first searches the local UFD .if the file is found,the system automatically searches the special user directory that contains the system files.
+   ################ Tree-structred directories #############
+   The natural generalization of a two-level directory structure is to extend the directory structure to a free of arbitrary height.
+   this generalization allows users to create their own subdirectories and to organize their files accordingly.
+   a tree is the most common directory structure
+   The tree has a root directory and every file in the system has a unique path name.
+   root    spell | bin | programs
+   tree structured directory structure (made it)
+   **Current directory**
+   *Each process has a current directory
+   *The current directory should contain most of the files that are of currnet interest to the process.
+   *when reference is made to a file,the current directory is searched.
+   *if a file is needed that is not in the current directory ,the the uesr usually must either specify a path name or change the current directory to be the directory holding that file.
+
+   **path names**
+Two types:1)Absoulte:Begins at the root and follows  a path down to the specified file,giving the directory names on the path.
+2)relative :define a path from the current directory.
+e.g if the current directory is root/spell/mail
+absoulte path name:root/spell/mail/ptr/first
+relative path name : ptr/first
+
+########### Deleting a directory #####
+The poilcy to be followed with deleting a directory has to be decided.
+if the directory is empty its emptyh its entry in the directory that contains it can simply be deleted.
+if the directory is not empty:
+*some systems will not allow deleting a directory unless it is empty.so to delete directory in such systems ,all its files and subdirectories must be deleted first.
+*some systems provide commands to delete directories irrespective of whether they are empty or not.
+e.g the rm-r commond in UNIX
+######### Acyclic-graph directories (diagram also)  #####
+need for acyclic-graph directories -SHARING.
+a tree structure prohibits the sharing of files or directies.
+An acyclic graph- that is ,a grap with no cycles-allows directories to share subdirectories and files.
+*When people are working as a team,all the files they want to share can be put into one directory.
+*The UFD of each team member will contain this directory of shared files a as a subdirectory.
+implementation of shared files and subdirectories:
+1)Links: A link is effectively a pointer to another file or subdirectory.
+2)duplicating: duplicate all information about shared files in both sharing direcories.thus ,both entries are identical and equal . A major concern here is in maintainning consistency when the files are modified.
+############## problem to be considered in acyclic -graph directory structures ##########
+*same file with paths and names:
+A file may now have multiple absoulte path names. also different file names may refer to the same file.this may yield wrong count of files while trying to take a count of the no. of files.
+*Deleting of shared files:
+-if the file is deleted whenever someone deletes it ,it will lead to dangling pointers to the no-existent file.
+-if shared files are implemented using symblic links,then deletion of a file by one user will delete only the link and won't affect the original file.but if the original file is deleted ,it will leave the links dangling .later,these linkes can be removed.
+
+
+
+
+   
+   
+   
+   
+
 
                 
                 
