@@ -2982,8 +2982,173 @@ Then the path would be /users/john
 *The operating system notes in its directory structure that a file system in mounted at the specified mount point.
 ( existing system and unmounted volume  )
    
+############### File sharing  ##############
+file sharing is very desirable for users who want to collaborate and to reduce the effort required to achieve a computing goal.
+Therefore,user-oriented os must accommodate the need to share files in spite of the inherent difficulties.
 
+ **Multiple users**
+ file sharing             file naming      file protection
+ become pre-eminent when an os accommodates multiple users.
+ given a directory sturctur that allows files to be shared by users,the system must mediate the file sharing .
+ The system can either:
+ *allow a user to access the files of other users by default.
+           or
+ *require that a user specifically grant access to the file.
 
+ How to implement sharing when there are multiple users.
+ *The system must maintain more file and directory attributes than that are needed on a single-user system.
+ *most systems follow the concept of file or directory owner (or user) and group.
+ Owner-the user who can change attributes and grant access and who has the most control over tha file.
+ Group- a subset of users who can share access to the file.
+ **e.g**
+ IN a UNIX system: owner of a file: can issue all operations on a file
+ member of the file group:can execute one subset of the above operations which is defined by the owner.
+ The owner Id and group id of a given file or directory is stored with the other file attributes.
+ *when a user requests an operation on a file ,the user ID can be compared with the owner attribute to determine if the requesting user is the owner of the file.
+ *likewise the group IDs can be compared.
+ *The result indicates which permissions are applicable.
+ *the system the applies those permissions to the requested operation and allows or denies it.
+ 
+ ########### Remote file systems #############
+ with the introduction and possibility of networks communication among remote computers became possible.
+ networking allows the sharing of resoures spread access a compus or even around the world.
+ One obvious resource to share is data in the form of files.
+ **Methods of remote file-sharing**
+ *Manually transferring files b/w system via programs like ftp (file transfer protocol).
+ *using distributed file system (DFS):
+ here ,data is stored on a server.The data is accessed and processed as if it was stored on the local client machine.The DFS makes it convenient to share information and files among users on a network in a controlled and authorized way.
+ *The world wide web:A browser in needed to gain access to the remote files,and separate operations (essentially a wrapper for ftp) are used to transfer files.
+ ############ The client-server model #########
+ remote file systems allow a computer to mount one or more file systems from one or more remote machines.
+ here,the machine containnig the files-THE SERVER
+ the machine seeking access the files-THE CLIENT
+ The server:
+ *declares that a resource is avaiable to clients.
+ *specifies which is the resource (which file).
+ *specifies to which clients they are avaiable.
+ A server can server multiple clients.and a client can use multiple servers.
+ **client identification**
+ A client can be specified by a network name or other identifies like IP address.
+ but client identification is difficult as these addresses or identifiers can be spoofed or imitated.
+ as a result,an unauthorized client could be allowed access to the server.
+ *To have a more secure approach , encryption keys can be used.
+ *but the implementation is challenging due to issues like both the serve and client side needs to use the same encryption algorithms.
+ e.g 
+In a UNIX system with NFS (network file system)
+*The user ID's of the client and server must match for file sharing to take place.
+*e.g if a user has ID-100 on the client and 2000 on the server,the authentication will be difficult.
+*The server must either trust the client or present the correct/matching user ID.
+*once authentication is done.
+-The remote file system is mounted.
+-file operation requests are sent on behalf of the user across the network to the server via the DFS protocol.
+-The server checks if the user has the access rights to perform the specified operation.
+-the request is either allowed or denied.
+############## failure modes #######
+local file system can fail for a variety of 
+reasons.
+-failure of the disk containing the file system 
+-corruption of the directory structure or other disk-management 
+-information 
+-disk-controller failure
+-cable failure
+-host-adapter failure
+
+Most of these failures will cause a host to crash and an error codition to be displayed and human intervention will be required to repair the damage.
+
+remote file systems have even more failure modes due to complexity of network systems and the required interactions b/w remote machines.The networks can be interrupted b/w hosts as a 
+result of 
+hardware failure  poor hardware configuration
+Although some network have built-in capability to recover from these failures,including multiple paths b/w hosts ,many do not . any single failure can thus interrupt the flow of DFS commonds.
+
+e.g 
+A client is in the midst of using a remote  file system .
+*suddenly a partitioning of the network ,a crash of the server,or a scheduled shutdown of the server has occured.
+*The remote file system will no longer be reachable now.
+
+what to do now?
+The system can: *either terminate all operations to the lost server.
+*delay operations until the server is again reachable.
+**Recovery from failure**
+Maintain a state information at both client and server side:
+*if both client & server maintain knowledge of their current activites and open files,then they can seamlessly recover form a failure.
+ implementing a stateless DFS:
+ *used in NFS
+ *Used in situation where the server crashed but must recognize that it has remotely mounted exported file systems and opended file.
+ *it assumes that a client request for a file read or write would not have occured unless.
+ *The NFS protocol carries all the information needed to locate the oppropriate file and perform the requested operation.
+ 
+ ############ Consistency semantics   #########
+ consistency semantics respesent an important criterion for evaluating any file system that supports file sharing .
+ what is its use?
+ These semantics specify how multiple users of a system are to access a shared file simultaneously.
+ They specify when modifications of data by one user will be observable by other users.
+ e.g
+ The UNIX file system uses the following consistency semantics:
+ *writes to an open files by a user are visible immediately to other users that have this file open.
+ *one mode of sharing allows users to share the pointers of current locations into the file.Thus,the advancing of the pointer by one user offects all sharing users.here ,a file has a single image that is accessed as an exclusive resource.
+ *contention for this single image causes delays in user processes.
+ 
+ **Andrew file system(AFS) semantics**
+ *writes to an open file by a user are not visible immediately to other users that have the same file open.
+ *once a file is closed,the changes mode to it are visible only in sessions starting later,already open instances of the file do not relfect these changes.
+ *Here,a file may be associated temporarily wih serveral (possibly different) images at the same time.consequently ,multiple users are allowed to perform both read and write accesses concurrently on their images of the file,witout delay.
+ e.g Immutable-shared-files concept uses the following consistency semantices:
+ *once a file is declared as shared by its creator,it cannot be modified.
+ *an immutable file has two key properties:
+ 1)its name may not be reused.
+ 2)its contents may not be altered
+ ###########  Protection  #########
+ types of access:
+ information stored in a computer system must be kept safe from:
+ 1)physical damage(Reliability)
+ file systems can be damaged by:
+ *hardware problems
+ *power surges/failures
+ *head crashes
+ *dirt
+ *temperature extremes
+ *vandalism etc.
+ reliability is generally provided by duplicate copies of files
+ 2)improper access (protection)
+ *file system must be allowed to be accessed only by authorized users.
+ *in a single user system,the protection can be done easily.
+ *but in multiuser system,other mechanisms are needed for proper protection of files.
+
+*complete protection can be provided by prohibiting access to everyone execpt the owner.
+*free access can be provided to everyone thus having no protection.
+*the above two methods are too extreme for general use.
+*controlled access can be provided by limiting the types of file access that can be made by different users.
+
+**file operations that may be controlled**
+*read -read from the file.
+*write - write or write the file.
+*execute -load the file into memory and execute it.
+*append - write new information at the end of the file.
+*delete -delete the file and free its space for possible reuse.
+*list - list the name and attributes of the file.
+other operations such as renaming ,copying and editing the file,may also be controlled.
+ ##################### Protection (access control)   #############
+ the most common approach to the protection problem is to make access dependent on the idenify of the user.
+ how can this be implemented?
+ using an access control list (ACL): with each file and director an access-control list(ACL) is associated specifying user names and the types of access allowed for each user.
+ **access control list**
+*when a user requests access to a particulare file ,the operating system checks the access list associated with that file.
+*if that user is listed for th requested access.the access is allowed * if not a protection violation  occurs,and the user job is denied access to the fiel.
+problems with this approach:
+*contructing such a list may be  a tedious and unrewarding task,especially if we do not know in advance the list of users in the system.
+*the directory entry,previously of fixed size, now needs to be of varible size,resutling in more complicated space managment .
+**solution to the problems**
+use a condensed version of the access list.
+systems mostly recognize three classifications of users in connection with each file:
+*owner - the user who created the file is the owner.
+*Group - A set of users who are sharing the file and need similar access is a group ,or work group
+*universe - all other users in the sytem constitue the universe.
+unix and window e.g search also
+ 
+
+ 
+
+ 
  
 
 
