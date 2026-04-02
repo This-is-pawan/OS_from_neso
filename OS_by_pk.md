@@ -3734,8 +3734,150 @@ for any particular list of requests ,we can define an optional order of retrival
  *values greater than 0 indicate that the page slot is occupied by a swapped page.
  *e.g a vllaue of 3 indicates that the swapped page is mapped to three different processes (which can occur if the swapped page is storing a region of memory shared by three processess)
   
-  
-  
+ ########## Raid structure ########
+Redundant arrays of independent disks
+*Disk drives have continued to get smaller and cheaper ,so it is now economically feasible to attach many disks to a computer system.
+*Raid is a way of storing the same data in different places on multipl hard disks or SSDs to protect data in the case of failure.
+*it improves the rate at which data can be read or written ,if the disks are operated in parallel.
+*it improves the reliability of data storage,because redundant information can be stored on multiple disks.Thus,failure of one disk does not lead to loss of data.
+*in the past RAID was used as a cost effective alternative to large expensive disks.
+*Today,they are used for their higher reliability and higer data-transfer rate,rather than for economic reason.
+############# working of RAID ########
+*it places data on multiple disks and allows I/O operations to overlap in a balanced way,thus improving performance.
+*As the use of multiple disks increases the mean time b/w failures,storing data redundanlty also increases  fault tolerance.
+*to the os,RAID arrays appear as a single logical drive.
+*RAID employs the techiques of disk mirroring or disk striping.
+                                  ⇩                 ⇩
+copies identical data onto more than one drive.   spread data over multiple disk drives.
+
+##########  improvement of reliablity via redundancy  ##########
+reliablity:
+The chanc that some disk out of a set of N disks will fail is much higher than the chace that a specific single disk will fail.
+e.g suppose that the mean time to failure of a single disk=100,000hurs.
+then mean time to failure of some disk in an array of 100 disk=100000/100 => hours =>41.66 days.
+if we store only one copy of the data,then each disk failure will result in loss of a significant amount of data-and such a high rate of data loss is unacceptable.
+solution:introduce redundancy.
+thus,even if a disk fails,data are not lost.
+################# Mirroring ##########
+Mirroring is the techinque of duplicating all the disks.
+*it is simple but expensive.
+*A logical disk then consists of two physical disks,and every write is carried out an both disks.
+*if one of the disks fails,the data can be read from the other.
+*data will be lost only if the second disk fails before the first failed disk is replaed.
+*The mean time to failure-where failure is the loss of data-of a mirroed volume 1)mean time to failure of the individual disks.
+2)the mean time to repair.
+suppose that the failures of the two disks are independant:
+*if the mean time to failure of a single disk=100,000 hours
+*if the mean time to repair =10hours
+*The mean time to data loss of a mirrored disk system=100,000power two/(2*10)=>500*10power six hours=>57000 years
+
+############## improvement in performance via parallelism  ########
+performance:
+with multiple disks,we can imporve the transfer rate by striping data accorss the disks.data striping.
+in its simples form,data stripping consists of splitting the bits of each bytes across multiple disk-bit-level striping.
+e.g a byte-11001110
+Array of 8 disks->diagram
+*we write bit i of each byte to disk i.
+*the array of eight disks can be treated as a single disk with sectors that are eight times the normal size and have eight times the access rate.
+*every disk participates in every access (read or write)
+*The no. of accesses that can be processed per second is about the same as on a single disk,but each access acn read eight times as many data in the same time a son a single disk..
+Bit-level striping can be generalized to include a no. of disk that either is a multiple of 8 or divides 8.
+e.g if we use an array of four disks bits i and 4+i of each byte go to disk i.
+e.g a byte -11001110
+array of 4 disks 
+block-level striing:*
+blocks of a file are striped accross multiple disks->with n disks ,block i of a file goes to disk (i mod n)+i
+*other levels of striping ,such as bytes of a sector or sectors of a block,also are possible.
+########### RAID levels (part-1)  #########
+mirroing-provides high reliablity ,but it is expensive.
+striping-provides high data-transfer rates,but it does not imporve realiability.
+*numerous schemes to provide redundancy at lower cost by using the ided of disk striping combined with 'parity' have been proposed.
+*these schemes have different cost-performace trade-offs and are classified according to levels called RAID levels.
+**Raid level 0**
+*raid level 0 refers to disk arrays with striping at the level of blocks but without any redundancy (such as mirroring or parity bits).
+*it offers the best perfomance,but it does not provide fault tolerance.
+**Raid level 1**
+*raid level 1 refers to disk mirroring.
+*read performance is improved since either disk can be read at the same time.
+*write perfomance is the same as for single disk storage.
+**Raid level 1**
+*Raid level-2 is also known as memory-style error-correcting code (ECC) organization.
+*this configuration uses striping accross disks,with some disks storing ECC information.
+*If one of the disks fails,the remaining bits of the byte and the associated error-correction bits can be read from other disks and used to reconstruct the damaged data.
+**Raid level 3**
+*RAID level-3 , or bit-interleaved parity organization,takes into account the fact that,unlike memory systems,disk controllers can detect whether a sector has been read correclty,so a sigle parity bit can be used for error correction as well as far detection.
+*it uses striping and dedicates one drive to storing parity information.
+**RAID level 4**
+*RAID level ,or block-interleaved parity organization,uses block-level striping.
+*In addition it keeps a parity block on a separate disk for corresponding blocks from N other disks.
+*if one of the disks fails,the parity black can be used with the corresponding blocks from the other disks to restore teh blocksof the failed disk.
+
+**Raid level 5**
+
+*RAID level-5,or block-interleaved distributed parity,spreads data and parity among all N+1 disks,rather than storing data in N disks and parity in one disk.
+*for each block,one of the disk stores the parity,and the others store data.
+*by spreading the parity across all the disks in the set,RAID-5 avoids the potential overuse of a single parity disk that can occur with RAID-4.
+**Raid level 6**
+*RAID level-6,also called the P + Q redundancy scheme,is much like RAID level 5 but stores extra redundant information to guard against mutiple disk failures.
+*The use of additional parity enables the array to continue to function even if two disks fail simultaneously.
+*RAID 6 arrays often have slower write performace than RAID 5 arrays.
+**Nested RAID levels**
+RAID level 0+1
+*RAID level 0+1 refers to a combination of RAID levels 0 and 1.
+*RAID 0 provides the performace ,while RAID 1 provides the reliability.
+*Generally ,this level provides better performance than RAID 5.
+*it is common in environments where both performance and reliability are important .
+*but ,it doubles the no. of disks needed for storage.
+RAID level 1+0
+*Disks are mirorred in pairs,and then the resulting mirror pairs are striped.
+*Advantage over level 0 +1;
+if a single disk fails in RAID 0 + 1,the entire stripe is inaccessible ,leaving only the other stripe available.with a failure in RAID 1+0 ,the single disk si unavailable,but its mirrored pair is still avaiable,as are all the rest of the disks.
+########### stable-storage implementation ##########
+information residing in stable storage is never last.
+how to implemnt such storage?
+*we need to replicate the needed information on multiple storage devices (usually disks) with independent failure modes.
+*we need to coordinates the writing of updates in a ways that guarantees that:-A failure during an update wil not leave all the copies in a damaged state.
+-when we are recovering from a failure ,we can force all copies to a consistent and correct value,even if another failure occurs during the recovery.
+
+A disk write results in one of three outcomes:
+1)Successful completion:the data were written correctly on disk.
+2)partial failure:A failure occured in the midst of transfer,so only some of the sectors were written with the new data,and the sector being written during the failure may have been corrupted.
+*total failure: the failure occurred before the disk write started ,so the previous data values on the disk remain intact.
+whereever a failure occurs during writing of a block,the system needs to detect it and invoke a recovery procedure to restore the block to a consistent state.
+to do that ,the system must maintian two physical blocks for each logical block.
+an output operation is executed as follows:
+1)write the information onto the first physical block.
+2)when the first wirte completes successfuly ,write the same information onto the second physical block.
+3)declare the operation complete only after the second write completes successfully.
+**during recovery from a failure ,each pair of physical blocks is examined***
+*if both are the some and no detectable error exists,then no further action is necessary.
+*if one block contians a detectable error,then we replace its contents with the value of the other block.
+*if neither block contains a detectable error,but the blocks differ in content,then we replace the content of the first block with that of the second.
+*this recovery procedure ensures that a write to stable either succeeds completly or results in no change.
+######### tertiary storage #########
+the main objective of the tertiary storage level is to provide huge storage capacity at low cost.
+because cost is so important ,in pratice ,tertiary stroage is built with removable media .
+the most common example are:
+*floppy disks
+*tapes 
+*Read-only ,write-once and rewritten CDs and DVDs.
+**Removable disks **
+removable disks are one kind of tetiary storage.
+e.g *floppy disks-made from a thin,flexible disk coated with mangnetic materal and enclosed in a protective plastic case.usual size it can hold=1MB.
+*magneto-optic disk-it records data on a origid platter coated with mangetic material ,but the recording technology is quite different from that for a magnetic disk.
+*optical disk-optical disks do not use magnetism at all.Instead,they use special materials that can be altered by laser light to have relatively dark or bright spots.e.g phase-change disk
+*worm (write-once ,read-many-times) disk-consists of a thin aluminum film sandwiched b/w two glass or plastic platters.to write a bit ,the drive uses a laser light to burn a small hole thorugh the aluminum. this burning cannot be reversed.
+################ end the OS ############
+############### mass storage structure solved problem-1 ########
+
+
+
+
+
+
+
+
+
   
 
 
