@@ -3183,10 +3183,68 @@ it contains volume or partition details such as:
   *location of the data blocks
   in unix file system it is called the inode.
   in ntfs it is stored in the master file table.
+  ############### in-memory structures ############
+  The in-memory information is used for both file-system mangement and performance improvement via coaching.
+  Here,the data are loaded of mount time and discared at dismount.
   
-  
-  
-   
+  *in-memory mount table:contains information about each mounted volume.
+  *in-memory directory-strucure cache: Holds the directory information of recently accessed directories (for directions of which volumes are mounted , it can cantain a pointer to the volume table.)
+  *system-wide open-file table:contains a copy of the FCB of each open file,as well as other information.
+  *per-process open-file table:contains a pointer to the appropriate entry in the system-wide open-file table,as well as other infromation.
+  file open ->open(filename)(user space)->directory structure (kernel memory)->directory (secondary storage) structure     file control block
+  file read->read(index) user space->index,pre-process open file table,system wide open-file table(kernel memory)->data blocks file control block (secondary storage)
+  ################# virtual file systems ##############
+ Modern os must concurrently support multiple types of file systems . but
+How does an os allow multiple types of files system to be integrated into a directory structure? 
+How can users seamlessly move b/w file-system types as they navigate the file-system space? 
+
+##################### Object-oriented techinques  ##################
+Most os including UNIX use object-oriented techniques to simpify,organize,and modularize the implementation.
+This allows:
+*very dissimilar file-system types to be implemented within the same structure,including network file system,such as NFS.
+*users to accesss file that are contained within multiple file systems on the local disk or even on file systems available across the network.
+The file-system implementation consists of three major layers:Layer1:The file-system interface.
+layers:Layer2:The virtual file system(VFS).
+layers:The layer implementing the file system type or the remote-file-system protocol.
+(schematic view of a virtual file system) diagram write 
+e.g of VFS architecture in Linux
+The four main object types defied by the Linux VFS are:
+*the indoe object - represents an individual file.
+*the file object - represents an open file.
+*the superblocks object - represents an entire file system.
+*the dentry object-respresents an individual directroy entry.
+Every object of one of these types contains a pointer to a function table which has the addresses of the actual functions that implement the defined operations for that particulra object.
+**Linear list**
+This is the simplest directory implementation method.
+*here ,a linear list of file names is used which points to the data blocks.
+*this is simple to implement but time consuming to execute.
+To create a new file.
+*search the directory to be sure that no existing file has the same name.
+*add a new entry at the end of the directory.
+To delete a file:
+*search the directory for the named file.
+*release the space alloacted to it.
+biggest disadvantage->A linear search is always required to find the files.This will slow down the entire process as users frequently need to access directory information.
+############### Hash Tables   #######
+Here,a linear list stores the directory entries ,but a hash data strucute is also used.
+*The hash table takes a value computed from the file name and returns a pointer to the file name in the linear list.
+*This greatly decrease the direcory search time.
+problems to be considered:
+*collisions-situations in which two file names hash to the same location.
+*hash tables are generally fixed size and the hash functions depends on that size.
+e.g of hash function
+suppose we have 5 files:
+Physics,chemistry ,mathematics,biology ,economics.
+they are assocaited with keys(x):
+physics-126
+chemistry-92
+math-34
+biology-345
+economics-453
+Hash function ,h(x) =x mod 5
+
+
+
 
  
 
