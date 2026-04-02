@@ -3243,6 +3243,56 @@ biology-345
 economics-453
 Hash function ,h(x) =x mod 5
 
+############## contiguous disk space allocation  #############
+contiguous allocation requires that each file occupy a set of contiguous blocks on the disk.
+*Disk addresses define a linear ordering on the disk.
+*contiguous allocation of a file is defined by the disk address and length (in block units) of the first block.
+*e.g if a file is 'n' blocks long and starts at location 'b'
+then,it occupies the  blocks b,b+1,b+2,...... b+n-1.
+*the directory entry for each file indicates the address of the starting block and the length of the area allocated for this  file
+.
+(diagram showing )
+***Advantages*** Accessing a file that has been allocated contiguously is easy.
+for sequential access:*the file system remebers the disk address of the last block referenced.
+*when neccessary ,it reads the next block.
+for direct access:*for accessing block 'i' of a file that starts at block 'b'.
+*we can immediately access block b+i.
+***Disadvantages***
+finding space for a new file is difficult.
+*first fit & best fit algoritms can be used for selecting free holes from a set of avaiable holes.
+*Both these algorithms suffer from externa fragmentation.
+*as files are allocated and deleted,the free disk space is broken into little pieces.
+*some older PC systems used contiguous allocation on floppy disks but this was not a good solution as it consumes a lot of time.
+***Deteriming how much space is needed for a file is a difficult task.
+*if the space allocated for a file is too less,and it needs more space later,then,
+>Either the user program is terminated & the user must allocate more space & run the program again.
+>The system finds a larger hole, copies the contents to the new space & release the previous space.
+######## Linked disk space allocation
+Linked allocation solves all problems of contiguous allocation.
+*each file is a linked list of disk blocks (which may be scattered anywhere on the disk).
+*The directory contains a pointer to the first and last blocks of the file.
+*
+the block is 512 bytes in size,and a disk address (the pointer) require 4 bytes,then he user sees blocks of 508 byts.
+ **Advantages**
+ There is no external fragmentation here.
+ The size of a file need not be declared when that file is created.
+ creating ,reading & writing to files can be easily done.
+ creating a file:
+*simply create a new entry in the directory .
+*each directory entry has a pointer to the disk block of the file.
+*this pointer is initialized to nil(the end-of-list pointer value) to signify an empty file,writing to a file .
+ find a free block using the free-space managment system.
+ this new block is written to and is lined to the end of the file.
+reading a file:
+ simpley read blocks by following the pointers from block to block.
+ **Disadvantages**
+ it can be used effectively only for sequential-access files.
+ To find the ith block of a file,we must start at the begininning of that file and follow the pointer until we get to the ith block.
+* space required for the pointer.if a pointer requires  4 bytes out of a 512-byte block,then 0.78 percent of the disk is being used for pointer.
+  solution:allocate clusters (multiples of blocks) rather than just blocks.
+  reliability.if pointers which are used for linking the files gets last or damaged or if wrong pointers are picked up,this will lead to problems.
+  ##################   File allocation table ()   
+
 
 
 
