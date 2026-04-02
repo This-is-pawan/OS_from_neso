@@ -3414,6 +3414,144 @@ Topics to be discussed:*the physical structure of  magnetic disks and mangnetic 
 *disk-scheduling algorithms.
 *disk formatting and managment of boot blocks,damaged blocks,and swap space.
 
+################# Magnetic disks ########
+Magnetic disks provide the bulk of secondary storage for modern computer systems.
+*Each disk platter has a flat circular shape ,like a CD.
+*common platter diameters range from 1.8 to 5.25 inches.
+*The two surfaces of a platter are covered with a magnetic material.
+*We store information by recording it magnetically on the platters.
+*A read-write head files just above each surface of every platter.
+*The heads are attached to a disk arm that moves all the heads as a unit.
+**Differents parts**
+*the surface of a platter is logically divided into circular tracks.
+*The circular tracks are subdivided into sectors.
+*The set of tracks that are at one arm position makes up a cylinder.
+*There may be thousands of concentric cylinders in a disk drive,and each track may contain hundreds of sectors.
+*The storage capacity of common disk drives is measured in gigabytes.
+
+**Disk speeds**
+when the disk is in use,a drive motor spins it at high speed.Most drives rotate 60 to 200 times per second.
+Transfer rate:The rate at whic data flow b/w the drive and the computer.
+postioning time/random access time.
+The time to move the disk arm to the desired cylinder (seek time)+the time for the desired sector to rotate to the disk head (rotational latency).
+Typical disks can transfer serveral megabytes of data per second,and they have seek times and rotational latencies of several milliseconds.
+**Head crash**
+*The disk head files on an extremely thin cushion of air(measured in microns).
+*There is a danger that the head will make conact with the disk surface.
+*Although the disk platters are coated with a thin protective layer,sometimes the head will damage the magnetic surface.
+*This accident is called a head crash.
+*A head crash normally cannot be repaired ;then entire disk must be replaced.
+
+**Attachements**
+A disk drive is attached to a computer by a set of wires called on I/O bus.
+some buses include:
+*Enhanced integrated drive electronices(EIDE).
+*Advanced technology attachement (ATA).
+*Serial ATA(SATA)
+*Universal serial bus (USB)
+*Fiber channel (FC)
+*Small computer system interface (SCSI) buses
+The data transfers on a bus are carried out by special electronic processors called controllers.
+############### Magnetic tapes ########33
+magnetic tape was used as an early secondary-storage medium.
+It is relavtively permanent and can hold large quantities of data,its access time is slow compared with that of main memory and magnetic disk.
+
+Random access to magnetic tape is about a thousand times than random acess to mangnetic disk,so tapes are not very useful for secondary storage.
+why?
+*A tape is kept in a spool and is wound or rewound post a read-write head.
+*Moving to the correct spot on a tape can take mintues.
+*Once positioned ,tape drives can write data at speeds comparable to disk drives.
+*Tape capacities vary greatly,depending on the particular kind of tape drive.typically,they store from 20GB to 200GB.
+*Tape categories:Based on width;4,8 and 19 millimeters and 1/4 and  1/2 inch.
+based on technology :LTO-2 and SDLT.
+tapes are used mainly of backup,for storage of infrequently used information ,and as a medium for transferring information from one system to another.
+################# Disk structure #############
+modern disk drives are addressed as large one-dimensional arrays of logical blocks.
+the smallest unit of transfer
+usually 512 bytes
+*The one-dimesional array of logical blocks is mapped onto the sectores of the disk sequentially.
+*sector 0 is the first sector of the first track on the outermost cylinder.
+*The mapping proceeds in order through that track,then trough the rest of the tracks in that cylinder ,and then through the rest of the cylinders from outermost to innermost.
+By using this mapping we can:Convert a logical block no. into an old-style disk address that consists of a cylinder no. a track no. within that cylinder, and a sector no. within that track.
+but in practice,it is diffcult to perform ,this translation.
+WHY? 
+1)Most disks have some defective sectors,but the mapping hides this by substituting spare sectors from elsewhere on the disk.
+2)The no. of sectors per track is not a constant on some drives.
+**Constant linear  velocity (CLV)**
+*one media that use CLV ,the density of bits per track is uniform.
+*The farther a track is from the center of the disk,the greater its length ,so the more sectors it can hold.
+*As we move from outer zones to inner zones,the no of sectors per track decreases.
+*Tracks in the outermost zone typically hold 40% more sectors than tracks in the innermost zone.
+*The drive increases its rotation speed as the head moves from the outer to the inner tracks to keep the same rate of data moving under the head.
+**constant angular velocity (CAV)**
+*The disk rotation speed can stay constant.
+*The density of bits decreases from inner tracks to outer tracks to keep the data rate constant.
+_____________________________________
+The no. of sectors per track has been increasing as disk technology improves,and the outer zone of a disk usually has several hundered sectors per track.
+similarly,the no. of cylinders per disk has been increaing; large disks have tens of thousands of cylinders.
+
+################# Disk attachement  ###############
+1)via I/O ports (HOst-attached storage)
+2)via a remote host in a distributed file system (network-attached storage)
+we will discuss about:1)host-attached storage
+2)network-attached storage
+3)storage-area network
+
+ ################ Host Attached storage  ###################
+*host-attached storage is storage accessed local I/O ports (which use several technologies)
+*The typical desktop PC uses an I/O bus architecture called.
+IDE (integrated drive electronics) or ATA(Advanced technology attachment).-supports a maximum of two drives per I/O bus.
+*A newer,similar protocol that has simplified cabling is SATA (serial ATA).
+*High-end workstations and servers use more sophisticated I/O architechtures,such as:SCSI (small computer system interface) and fiber channel(fc).
+*The SCSI protocol supports a maximum of 16 devices on the bus.
+physical medium->usually a ribbon cable having a large no. of conductors.
+*FC->high-speed serial architecture that can operate over optical fiber or over a four-conductor cooper cable.PC variant ->arbitrated loop (FC-AL)->can address 126 devices.
+**Network-attached storage**
+*A network-attached storage (NAS) device is a special-purpose storage system that is accessed remotely over a data network.
+*clients access networ-attached storage via a remote-produre call interface such as NFS for UNIX systems or CIFS for windows machines.
+*The remote procedure calls (RPCs) are carried via TCP or UDP over an IP network-usally the same local-area network (LAN) that carries all data traffic to the clients .
+*The network attached stroage unit is usally implemented as a RAID array with software that implements the RPC interface.
+############## Storage-area network ##########
+Drawback of network-attached  storage systems:The storage I/O operations consume bandwidth on the data network,thereby increasing the latency of network communication.
+*A storage-area network (SAN) is a private network (using storage potocols rather than netwroking protocols)connecting servers adn storage units.
+*multiple hosts and multiple storage arrays can attach to the same SAN,and storage can be dynamically allocated to hosts.
+*E.g if a host is running low on disk space,the SAN can be configured  to allocate more storage to that host.
+*SANs make it possible or clusters  of servers to share the same storage and for storage arrays to include multiple direct host connections.
+**Storage areas network (diagram)**
+
+##############  Disk scheduling    #########
+One of the responsibilities of the os is to use the hardware efficiently .
+To achieve this,the disks need to have:
+*fast access time.
+*large disk bondwidth.
+**Access time**
+seek time + rotational latency
+seek time:    the time for the disk arm to move the heads to the cylinder containing the desired sector.
+rotaitional latency:The additional time for the disk to rotate the desired sector to the disk head.
+Disk bandwidth
+the total no. of bytes transferred ,divided by the total time b/w the first request for service and the completion of the last transfer.
+Total no. of bytes transferred
+____________________________
+toatal time b/w the first request for service and the completion of the last transfer.
+How can we improve the access time & bandwidth
+we can improve both the access time and the bandwidth by scheduling the servicing of disk I/O requests in a good order.
+whenever a process needs I/O to or from the disk,it issues a system call to the OS.
+the request specifiles serveral pieces of information:
+*Whether this operation is input or output.
+*What the disk address for the transfer is.
+*What the memory address for the transfer is.
+*What is the no. of sectors to be tansferred is.
+if the desired disk drive and controller are available ,the request can be serviced immediately.
+if the drive or controlller is busy ,any new requests for service will be placed in the queue of pending requests for that drive.->disk-scheduling algorithms.
+#################  Disk scheduling algorithms   #####################3
+
+
+
+
+
+
+
+
 
 
  
