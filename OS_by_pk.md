@@ -3291,7 +3291,138 @@ reading a file:
 * space required for the pointer.if a pointer requires  4 bytes out of a 512-byte block,then 0.78 percent of the disk is being used for pointer.
   solution:allocate clusters (multiples of blocks) rather than just blocks.
   reliability.if pointers which are used for linking the files gets last or damaged or if wrong pointers are picked up,this will lead to problems.
-  ##################   File allocation table ()   
+  ##################   File allocation table ()   ##########
+  This is an important variation on linked allocation method.
+  *This method is used by the MS-DOS and OS/2 os.
+  *A section of disk a the beginning of each volume is set aside to contain the table.
+  *The table has one entry for each disk block and is indexed by block no.
+  *the directory entry contains the block no. of the first block of the file.
+  *The chain continues until the last block ,which has a special end-of-file value as the table entry.
+  *unused blocks are indicated by a 0 table value.
+  directory entry
+  (diagram)
+  test .... 205
+  name     start block
+
+  advantage:random-access time is improved ,because the disk head can find the location of any block by reading the information in the FAT.
+  no. of disk blocks.
+  ############## indexed disk space allocation ###########
+The main disadvantage of linked allocation:it cannot support efficient direct access.
+indexed allocation solves this problem by bringing all the pointers together into one location:the index block.
+*Each file has its own index block->an array of disk-block addresses.
+*The ith entry in the idex block points to the ith block of the file.
+*To find and read the ith block,we use pointer in the ith index-block entry.
+**while creating a file**
+  *All pointers in the index block are set to nil.
+  *when the ith block is first written ,a block is obtained from the free-space manager.
+  *its address is put in te ith index-block entry.
+  **Advantages**
+  *supports direct access,without suffering from external fragmentation.
+  *any free block on the disk can satisfy a request for more space.
+  **Disadvangtage**
+  *it suffers from wasted space.
+  *the pointer overhead of the index block is generally than the pointer overhead of linked allocation.
+  **How large should the index blocks be?**
+  *if it is too small ,it will not be able to hold enough pointers for large file.
+  *if its is too large (larger than what is required for the file) it is a waste of space.
+  some mecanisms to deal with this issue:
+  *linked scheme.
+  *multilevel index.
+  *comined scheme.
+
+########## performance of disk space allocation methods ##########
+we have discussed about 3 main disk space allocation methods
+1)contiguous allocaion
+2)linked allocaion
+3)indexed allocaion
+all these methods vary in their storage efficieny and data-block access time.
+important criteria in selecting the proper method or methods for an os to implement.
+*** Before selecting an allocation method,we need to determine how the systems will be used.
+e.g A system with mostly sequential access should not use the some mehtod as a system with mostly random access.
+contiguous allocation:requires only one access to get a disk for any type of access (sequential or direct).only the initial block address has to be kept in memory 
+sequential access        direct access
+linked allocation:The address of the next block can be kept in memory & can be read directly.Hence ,it is good for sequential access,but an access to the ith disk block will require i disk reads.
+sequential access         direct acccess
+some systems make use of both contiguous & linked allocation methods:
+*they support direct-access file by using contiguous allocation and sequential access by linked allocation.
+*here,the type of access to be made must be declared when the file is created.
+*A file created for sequential access will be linked and cannot be used for direct access.
+*A file created for direct access will be contiguous and can support both direct access and sequential access (maximum length must be declared when it is created)
+*The O.S must have appropriate data structures and algorithms to support both allocation methods.
+indexed allocaion -more complex.    sequential access   direct access
+*if the index block is alredy in memory ,then the access can be made directly .
+*But,keeping the index block in memory requires considereable space.
+*if this memory space is not available,then we may have to read first then index block and then the desired data block.
+*for multi-level index blocks,there will be multiple index blocks reads necessary.
+*e.g for a very large file,accessing a block near the end of the file will need all the index blocks to be read first.
+*so performance here depends on:-index structure   -size of the fle  -position of the desired block
+some system combine contiguous allocation with indexed allocation:
+*they use contiguous allocation for small files (up to three or four blocks)
+*it is automatically swithched to an indexed allocation if the file grows large.
+*since most files are small,and contiguous is efficent for small files  average performance can be quire good.
+
+################# The unix inode  ##################
+An inode is a data structure in UNIX os that contains important information pertainning to files within a file system.
+*when a file system is created in UNIX a specific amoutn of inodes are also created.
+*usualy,about 1% of the total file system disk space is allocated to the inode table.
+               **The inode structure** (most important)
+mode -information regarding file type and permissions
+owners-access details like owner of the file ,group of the file etc.
+timestamps-stores the time of files access,modification,etc.
+size block - specifies the size of the blocks.
+count-no. of blocks.
+
+############## Free-space managment ########
+disk space is limited
+so,we need to reuse the space from deleted files for new files, if possible.to keep of free disk space,the system maintians a free-space list which records all free disk block-those not allocated to some file or directory.
+to create a file:*we search the free-space list for the required amoutn of space.
+*allocate that space to the new file.
+*this space is then removed from the free-space list.
+when file is deleted:*its disk space is added to the free-space list.
+
+ **bit vector**
+ The free-space list is implemented as a bit map or bit vector.
+ *each block is represented by 1 bit.
+ *if the block is free,the bit is 1.if the block is allocated the bit is 0
+ e.g consider a disk where blocks 2,3,4,5,8,9,10 so on are free and the rest of the blocks are allocated.
+ the free-space bit map would be:
+ 001111001111110001100000011100000....
+ *Advantage*:*it is relatively simple in finding the first block or n consecutive free blocks on the disk.
+ *Disadvantage*:it is ineffiecient unless the entire vector is kept in main memory.
+ **Grouping**
+ store the addresses of n free blocks in the first free block.
+ *The first n-1 of these blocks are actually free.
+ *The last block contains the addresses of another n free blocks and so on.
+ *The addresses of a large no. of free blocks can now be found quickly ,unlike the situation when the standard linked-list approach is used.
+
+**Counting**
+Here, we take advantage of the fact that, generally,serveral contiguous blocks may be allocated or freed simultaneously particuarly when space is allocated with the contiguous-allocation algorithm or through clustering.
+*we keep the address of the first free block and the no. n of free contiguous blocks that follow the first block.
+*Each entry in the free-space list then consists of a disk address and a count.
+
+######################## file system implementation end ##############################
+file system solved problems do lateral
+###########################################################
+
+############### Mass storage structure  #######
+the file system can be viewed logically as consisting of three parts.
+file system interface  -the user and programmer interface to the file system.
+file system implementation-the inernal data strucuture and algorithms used by the O.S to implement the above interface.
+mass-storage structure  -the secondary and tertiary storage structures
+The secondary and tertiary storage structures are the lowest level of the file system.
+Topics to be discussed:*the physical structure of  magnetic disks and mangnetic tapes.
+*disk-scheduling algorithms.
+*disk formatting and managment of boot blocks,damaged blocks,and swap space.
+
+
+
+ 
+
+
+
+
+  
+
 
 
 
