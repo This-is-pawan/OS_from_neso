@@ -3543,15 +3543,200 @@ the request specifiles serveral pieces of information:
 *What is the no. of sectors to be tansferred is.
 if the desired disk drive and controller are available ,the request can be serviced immediately.
 if the drive or controlller is busy ,any new requests for service will be placed in the queue of pending requests for that drive.->disk-scheduling algorithms.
-#################  Disk scheduling algorithms   #####################3
+#################  Disk scheduling algorithms   ############# 
+first-come ,first-served(FCFS)
+FCFS is th simplest disk scheduling algorithms.
+Here the requests are addressed in the order they arrive in the disk queue.
+e.g
+consider a disk queue with requests for I/O to blocks on cylinders 
+98,183,37,122,14,124,65,124,65,67
+   FCFS disk scheduling  showing diagram in queue: 
+   
+################ Disk scheduling algorithms   ###############
+shortest-seek-time-first (SSTF)
+it seems reasonable to service all the requests close to the current head position before moving the head for away to service other requests
+*The SSTF algo selects the request with the minimum seek time from the current head position.
+*since seek time increase with the no. of cylinders traversed by the head,SSTF choose the pending request closest to the current head position.
+e.g consider a disk queue with requests for I/O to blocks on cylinders
+98,183,37,122,14,124,65,124,65,67
+SSTF disk scheduling  showing diagram in queue: 
+   ################ Disk scheduling algorithms   ###############
+   SCAN (Elevator)
+   *in the SCAN alg ,the disk arm starts at one end of the disk and moves toward the other end ,servicing requests as it reaches each cylinder,until it gets to the other end of the disk.
+   *At the other end ,the direction of head movements is reversed ,and servicing continues
+   *The head continuously scans back and forth across the disk.
+   e.g 
+   consider a disk queue with requests for I/O to blocks on cylinders
+   98,183,37,122,14,124,65,124,65,67
+SCAN disk scheduling  showing diagram in queue: 
+   ################ Disk scheduling algorithms   ###############
+   circular SCAN (C-SCAN)
+   *in SCAN algorithm ,when the head reaches one end adn reverse direction ,the density of requests immediately in front of the head are relatively  few as these cylinders have recently been serviced.
+   *the heaviest density of requests is at the other end of the disk.these requests have also wiated the longest ,so why not go there first?
+   *Like SCAN,C-SCAN moves the head from one end of the disk to the other,servicing request along the way.
+   *when the head reaches the other end,however,it immediately returns to the beginning of the disk,witout servicing any requests on the return trip.
+   e.g
+   consider a disk queue with requests for I/O to blocks on cylinders
+   
+98,183,37,122,14,124,65,124,65,67
 
+C-SCAN disk scheduling  showing diagram in queue: 
+   ################ Disk scheduling algorithms   ###############
+LOOK
+*both the SCAN and C-SCAN move the disk arm across the full width of the disk.
+*but in LOOK algo ,the arm goes only as far as the final request in each direction.
+*The,it reverse direction immdediately,without going all the way to the end of the disk.
+e.g  consider a disk queue with requests for I/O to blocks on cylinders
+98,183,37,122,14,124,65,124,65,67
 
+SCAN disk scheduling  showing diagram in queue: 
+   ################ Disk scheduling algorithms   ###############
+circular LOOOK (C-LOOK)
+*Like LOOK,C-LOOK algo moves the head in one direction servicing requests along the way.
+*when the head reaches the last request ,it immediately returns to the farthest request on the other end without servicing any requests on the return trip.
+*Then from that position,it services the remaining request in the same direction like before.
+e.g
+consider a disk queue with requests for I/O to blocks on cylinders.
+98,183,37,122,14,124,65,124,65,67
 
+C-LOOK disk scheduling  showing diagram in queue: 
+   ################ selection of a  Disk scheduling algorithms   ###############
+we have studied about many disk-scheduling algo.
+how do we choose the best one?
+SSTF -is common and has a natural appeal because it increase performance over FCFS.
+SCAN & C-SCAN -perform better for systems that place a heavy load on the disk ,because they are less likely to cause a starvation problem.
+for any particular list of requests ,we can define an optional order of retrival, but the computation needed to find an optional schedule may not justify the savings over SSTF or SCAN.
+  With any scheduling algo performance depends heavily on the no. and types of requests.
+  *suppose that the queue usually has just one outstanding request.
+  *then,all scheduling algo behave the same,because they have only one choice for where to move the disk head.
+  *they all behave like FCFS scheduling.
+  Requests for disk service can be greatly influenced by the file-allocation method.
+  *contiguous allocation-serveral requests that are close together on the disk->limited head movement.
+  *linked or indexed movement.
+  THE LOCATION OF DIRECTORIES AND INDEX BLOCKS IS ALSO IMPORTANT.
+  every file must be opened to be used->opening a file requires searching the directory structure->the directories will be accessed frequently.
+  *suppose that a directory entry is on the first cylinder and a file's data are on the final cylinder->the disk head has to move the entire width of the disk.
+  *if the directory entry were on the middle cylinder ->the head would have to move, at most one-half the width.
+  *coaching the directories and index blocks in main memory can also help to reduce the disk-arm movement, particularly for read requests.
+  Because of these complexities ,the disk-scheduling algorithm should be written as a separate module of the operation system,so that it can be replaced with a different algorith if neccessary.
+  either SSTF or LOOK is reasonable choice for the default algo.
+  ############   DISK FORMATING   ###########
+  a new magnetic disk is a blank slate.
+  it is just a platter of a magnetic recording material .
+  before a disk can store data,it must be divided into sectors that the disk controller can read and write.
+  **Low-level-formatting**
+  low-level formatting files the disk with a special data struturce for each sector.The data structure for a sector typically consist of :
+  *A header
+  *A data area (usually 512 bytes in size)
+  *a trailer
+  The header adn trailer contain information used by the disk controler,such as a sectoer no. and and error-correcting code (ECC).
+  Most hard disks are low-level-formatted at the factory as a part of the manufactuing process.
+  **logical formatting**
+  To use a disk to hold files,the O.S still needs to record its own data structures on the disk.
+  step-1:partition the disk into one or more groups of cylinders.
+  the os can treat  each partition as though it were a separate disk.
+  step-2:logical formatting (or creation of a file system).
+  the o.s stores the initial file-system data structures onto the disk.these data structure may include maps of free adn allocated space (a FAT or modes) amd an initial empty directory.
+  to increase efficienty most file systems group blocks together into larger chunks,frequently called clusters.
 
-
-
-
-
+  ############ Boot Block  #############
+  For a computer to start running when it is powered up or rebooted it must have an initial program to run.
+  the bootstrap program
+  it initializes all aspects of the system,from CPU registers to device controllers and the contents of main memory,and then starts the os.
+  The bootstrap program finds the os kernal on disk,loads that kernel into memory,and jumps to an initial address to begin the os execution.
+  boot disk or system disk
+  *most computers store the bootstrap in the read-only-memory (ROM).
+  *ROM needs no initialization and is at a fixed location that the processor can start executing when powered up or reset.
+  *ROM cannot be infected by a computer virus.
+  *problem:changing this bootstrap code requires changing the ROM,hardware chips .
+  *To avoid this problem:most system store a tiny bootstrap loader program in the boot ROOM whose only job is to bring  in a full bootstrap program from disk.
+  *the full bootstrap program can be changed easily:A new version is simply written onto the disk.
+  *the full bootstrap program is stored in the boot blocks at a fixed location on the disk.
+  *A disk that has a boot partition is called a boot disk or system disk.
+  Booting from disk in windows 2000
+  diagram here:
+  ###################### Bad blocks  ############
+  Disks are prone to failure because they have moving parts and small tolerances.
+  sometimes the failure is complete -> ths disk needs to be replaced and its contents restored from backup media to the new disk.
+  *more frequently ,one or more sectors become defective.
+  *Most disks even came from the factory with bad blocks.
+  *Depending on the disk and controller is use,these blocks  are handled in a variety of ways.
+  ######## handling bad blocks #######
+  *manual handling       - used in simple disks
+  *sector sparing or forwarding  
+  *sector slipping              - used in more sophisticated disks
+  
+  **manual handling:**
+  *The MS-DOCs formate command performs logical formatting and as a part of the process.scans the disk to find bad blocks 
+  *if formate finds a bad block, it writes a special value into the corresponding FAT entry to tell the allocation routines not to uer that block.
+  _____________
+  *if blocks go bad during normal operation,a special program (such as chkdsk) must be run manually to search for the bad blocks and to lock them away as before.
+  *data that resided on the bad blocks usually are lost.
+  **Sector sparing or forwarding*
+  *The controller maintains a list of bad blocks on the disk.
+  *The list is initialized during the low-level formatting at the factory and is updated over the life of the disk.
+  *low-level formatting also sets aside spare sectors not visible to the os .
+  *the controller can be told to replace each bad sector logically with one of the space sectors.
+  e.g example of sector sparing or forwarding:
+  *The os tries to read logical block 87.
+  *The controller calculates the ECC and finds that the sector is bad. it reports this finding to the os.
+  *the next tiem the system is rebooted ,a special command is run to tell the SCSI controler to replace the bad sector with a spare.
+  *After that,whenever the system requests logical block 87,the request is tanslated into the replacemetn sector's address by the controller.
+  sector slipping:
+  *suppost that logical block 17 becomes defective and the first avaiable spare follows sector 202.
+  *then,sector slipping remaps all the sectors from 17 to 202 ,moving them all down one spot.
+  *slipping the sectors in this way frees up the space of sector 18,so sector 17 can be mapped to it.
+  *sequential order is maintained.
+  ########## Swap-space use   ##### 
+  swap space is used in various ways by different os ,depending
+  on the memory-management algorithms in use.
+  e.g 1)systems that implement swapping may use swap space to hold an entire process image,including the code and data segaments.
+  )paging systems may simply store pages that have been pushed out of main memory.
+  the amount of swap space needed on a system can depend on :
+  *the amount of physical memory.
+  *the amount of virtual memory it is backing.
+  *the way in which the virtual memory is used.
+  it can range from a few megabytes of disk space to gigabytes.
+  ESTIMATING THE AMOUNT OF SWAP SPACE REQUIRED IN A SYSTEM
+  it may be safer to overestimate than to underestimate the amount of swape space required.
+  *understimating-if a system runs out of swap space it may be forced to abort processes or may crash entirely.
+  *overestimating-wastes disk space that could otherwise be used for files,but it does no other harm.
+  Depends from system to system:
+  solaris-suggests setting swap space equal to the amount by which virtual memory exceeds pageable physical memory.
+  Linux-suggests setting swap space to double the amount of physical memory,although most linux systems now use considerably less swap space.
+  ####### swap-space location########
+  a swap space can reside in one of two places:
+ 1.it can be carved out of the normal file system.
+ if the swap space is simply a large file within the file system,normal file-system routines can be used to create it,name it,and allocate its space
+ Advantagees                   disadvantages
+ 1)easy to implement         1.it is inefficient.
+                             2.navigating the directory structure and the disk-allocation data structure takes time and (potnetially) extra disk accesses.
+ 3)external fragmentation can greatly increase swapping times by facing multiple seeks during reading or writing of a process image.
+ 
+ 2)it can be in a separate disk partition.
+ swap space can be created in a separate raw partition ,as no files system or directory struture is placed in this space.
+ *A separate swap-space storge manager is used to allocate adn deallocate the blocks from the raw partition.
+ *this manager uses algorithms optimized for speed rather then for storage efficiency, because swap space is accessed much more frequently than file systems (when it is used.)
+ _________________
+ *internal fragmentation may increase ,but this trade-off is acceptable because the life of data in the swap space generally is much shorter is much shorter than that of files in the file system.
+ *swap space is reininitialized at boot time so any fragmentation is short-lived.
+ *adding more swap space requires repartitiong the disk.
+ ############# An example of swap-space management #####
+ *swap space is only used for anonymous memory or for regions of memory shared by several processes.
+ *linux allows one or more swap area to be establish.
+ *a swap area may be in either:
+ a swap file on a regular file system   or a raw swap partitio.
+ *Each swap area consists of a series of 4-KB page slots,which are used to hold swapped pages.
+ *associated with each swap area is a swap map-an array of integer counters,each corresponding to a page slot in the swap area.
+ swap map
+ an array of integer counters,each corresponding to a page slot in the swap area.
+ *if the value of a counter is 0,the corresponding page slot is avaiable.
+ *values greater than 0 indicate that the page slot is occupied by a swapped page.
+ *e.g a vllaue of 3 indicates that the swapped page is mapped to three different processes (which can occur if the swapped page is storing a region of memory shared by three processess)
+  
+  
+  
+  
 
 
  
