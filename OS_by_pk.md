@@ -2,7 +2,7 @@
 ---
 
 # 1. What is an Operating System (OS)?
-
+    
 An **Operating System (OS)** is system software that **manages computer hardware and software resources** and allows users and applications to communicate with the computer.
 
 👉 In simple words:
