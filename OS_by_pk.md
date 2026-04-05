@@ -272,6 +272,12 @@ magnetic taps.
 _______________________________ Basic of Operating System (I/O Structure)
 Working of an I/O Operation   _________________________
 
+| Component         | Type     | Role                 |
+| ----------------- | -------- | -------------------- |
+| Local Buffer      | Memory   | Temporary storage    |
+| Device Controller | Hardware | Controls device      |
+| Device Driver     | Software | Communication bridge |
+
 
 An Input/Output (I/O) operation is the process through which the computer communicates with external devices such as keyboard, printer, hard disk, or mouse.
 
