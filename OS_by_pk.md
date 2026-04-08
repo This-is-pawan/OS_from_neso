@@ -890,7 +890,7 @@ File Manipulation	Read, write, create files
 Device Management	Control hardware devices
 Information Maintenance	Get system information
 Communication	Exchange data between processes
-
+(monolithic topic of os)
 
 ################### system programs #################
 An important aspect of a modern system is the collection of system programs.
